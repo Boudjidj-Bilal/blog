@@ -1,0 +1,10 @@
+{% extends 'base/base.html' %}
+{% block content %}
+{% for manga in mangahtml %}
+      <h2> {{ manga.name }}<a href="{% url 'pagedetailmanga'  manga.slug %}" target="_self">aller vers</a></h1></h2>
+      <div> {{ manga.comment|slice:":100" }}</div>
+      <div> {{ manga.description|slice:":100" }}</div>
+
+      
+{% endfor %}
+{% endblock %}

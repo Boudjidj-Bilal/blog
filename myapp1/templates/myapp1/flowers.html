@@ -1,0 +1,7 @@
+{% extends 'base/base.html' %}
+{% block content %}
+{% for flower in flowershtml %}
+      <h2> {{ flower.title }}</h2>
+      <h3> {{ flower.description }}</h3>
+{% endfor %}
+{% endblock %}
