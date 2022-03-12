@@ -1,12 +1,12 @@
 # Welcome to my  simple website!
 
-this mys site disigned with django, python,
+This is my website designed with **Django** and **Python**,
 
-others language programs used in this website
-- Python 
+Others language programs used in this website
+
+- Python
 - Html
-- Jinja 
+- Jinja
 - CSS
 - Javascript
 - database
-
