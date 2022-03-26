@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'myapp1',
     'forum',
     'base',
-    'whitenoise',
 ]    
 
 MIDDLEWARE = [
@@ -124,11 +123,9 @@ MEDIA_URL = 'media/'
 MEDIA_ROOT  = os.path.join(BASE_DIR, 'media')
 
 
-STATIC_ROOT = 'static'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfile')
 STATIC_URL = 'static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'staticfile'),
-]
+STATICFILES_DIRS = [ os.path.join(BASE_DIR, 'static'),]
 
 
 
