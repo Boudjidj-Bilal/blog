@@ -1,7 +1,18 @@
 {% extends 'base/base.html' %}
 {% block content %}
       <h2> {{ mangadetailhtml.name }}</h2>
-      <div> {{ mangadetailhtml.comment }}</div>
+      <br>
       <div> {{ mangadetailhtml.description }}</div>   
-    
+      <br>
+      <div>
+            <a class="btn btn-primary" href="{% url 'pagedetailmangacommentaire' mangadetailhtml.id %}" role="button">Link</a>
+      </div>
+      <div>
+      {% for comment in commentairechapitrehtml %} 
+         {{ comment.pseudo}}
+         {{ comment.comment }}
+         {{ comment.date }}
+         <br>
+      {% endfor %}  
+      </div>
 {% endblock %}

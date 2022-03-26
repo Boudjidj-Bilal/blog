@@ -1,3 +1,4 @@
+from tokenize import PseudoExtras
 from django.utils.text import slugify
 from django.db import models
 
@@ -24,7 +25,6 @@ class Profile(models.Model):
     
 class Manga(models.Model):
     name = models.CharField(max_length=255, default='')
-    comment = models.TextField(default='')
     description = models.TextField(default='')
     slug = models.SlugField(blank=True, default='')
     
@@ -37,4 +37,12 @@ class Manga(models.Model):
         self.slug = slugify(self.name)
         super(Manga, self).save()
 
-    
+class Commentairechapitre(models.Model):
+    pseudo = models.CharField(max_length=30, default='')
+    comment = models.TextField(default='')
+    date = models.CharField(max_length=30, default='')
+    manga = models.ForeignKey(Manga,  null=True, on_delete=models.CASCADE)
+
+    def __str__(self):
+        #return self.pseudo
+        return "%s %s %s" % ( self.date, self.pseudo, self.manga.name)

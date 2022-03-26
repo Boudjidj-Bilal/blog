@@ -1,0 +1,43 @@
+// https://dbdiagram.io/d
+//// -- LEVEL 1
+//// -- Tables and References
+
+// Creating tables
+Table manga as M {
+  id int [pk, increment] // auto-increment
+  name varchar
+  description varchar
+  slug varchar
+}
+
+Table commentairechapitre as C {
+  id int [pk, increment] // auto-increment
+  pseudo varchar
+  date varchar
+  comment varchar
+  manga varchar
+ }
+
+// Creating references
+// You can also define relaionship separately
+// > many-to-one; < one-to-many; - one-to-one
+Ref: C.manga > CH.id
+Ref: CH.manga > M.id
+
+Table chapitre as CH {
+  id int [pk, increment] // auto-increment
+  name varchar
+  date varchar
+  suivant varchar
+  manga varchar
+}
+
+Table image as I {
+  id int [pk, increment] // auto-increment
+   name varchar
+   chapitre varchar
+}
+// Creating references
+// You can also define relaionship separately
+// > many-to-one; < one-to-many; - one-to-one
+Ref: I.chapitre > CH.id

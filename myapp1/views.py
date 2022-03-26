@@ -1,6 +1,9 @@
-from django.shortcuts import get_object_or_404, render
+from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404, redirect, render
+from myapp1.forms import CommentairechapitreForm
+from datetime import datetime
 
-from myapp1.models import Chaise, Flower, Manga
+from myapp1.models import Chaise, Commentairechapitre, Flower, Manga
 
 # Create your views here.
 def maison(request): 
@@ -35,4 +38,22 @@ def manga(request):
 
 def mangadetail(request, slug=None):
     manga = get_object_or_404(Manga, slug=slug)
-    return render(request, 'myapp1/mangadetail.html', {'mangadetailhtml': manga })
+    comments = Commentairechapitre.objects.filter(manga=manga.id)
+    return render(request, 'myapp1/mangadetail.html', {'mangadetailhtml': manga, 'commentairechapitrehtml': comments })
+
+def mangadetailcommentaire(request,id=None):
+    #manga = get_object_or_404(Manga, slug=slug)
+    #comments = Commentairechapitre.objects.filter(manga=manga.id)
+    if request.method == 'POST':
+        form = CommentairechapitreForm(request.POST)
+        if form.is_valid():
+            commentaire = form.save(commit=False)
+            commentaire.manga = Manga.objects.get(id=id)
+            #slug = Manga.objects.get(id=id).slug
+            commentaire.date = datetime.now().strftime('%H:%M:%S')  
+            commentaire.save()
+            return redirect('/' )
+    else:
+        form = CommentairechapitreForm()
+    return render(request, 'myapp1/commentaire.html', {'form': form})
+
