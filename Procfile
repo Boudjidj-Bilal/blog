@@ -1,1 +1,1 @@
-web: gunicorn nameOfProject.wsgi --log-file -
+web: gunicorn myblog.wsgi --log-file -
