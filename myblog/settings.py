@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-$e8-s8vv94kx_!7-0!#n=y33@mda$5ma*y2*unt(*kc2!8z_yt
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.0.115', '127.0.0.1']
+ALLOWED_HOSTS = ['192.168.0.115', '127.0.0.1','mangaword.herokuapp.com']
 
 
 # Application definition
@@ -40,10 +40,12 @@ INSTALLED_APPS = [
     'myapp1',
     'forum',
     'base',
+    'whitenoise',
 ]    
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -132,3 +134,5 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
