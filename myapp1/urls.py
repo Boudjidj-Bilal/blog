@@ -13,7 +13,4 @@ urlpatterns = [
     path('index2/',views.index2,name='pageindex2'),
     path('flowers/',views.flowers,name='pageflowers'),
     path('chaise/',views.chaise,name='pagechaise'),
-    path('',views.manga,name='pagemanga'),
-    path('manga/<slug:slug>/',views.mangadetail,name='pagedetailmanga'),
-    path('manga/commentaire/<int:id>/',views.mangadetailcommentaire,name='pagedetailmangacommentaire'),
 ]

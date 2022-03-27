@@ -8,21 +8,36 @@ Table manga as M {
   name varchar
   description varchar
   slug varchar
+  user varchar
 }
 
 Table commentairechapitre as C {
   id int [pk, increment] // auto-increment
-  pseudo varchar
+  chapitre varchar
   date varchar
   comment varchar
-  manga varchar
+  user varchar
  }
+Ref: C.user > U.id
 
 // Creating references
 // You can also define relaionship separately
 // > many-to-one; < one-to-many; - one-to-one
-Ref: C.manga > CH.id
+Ref: C.chapitre > CH.id
 Ref: CH.manga > M.id
+
+Table user as U {
+  id int [pk, increment]
+  name varchar
+}
+Ref: M.user > U.id
+Ref: L.user > U.id
+
+Table like as L {
+  id int [pk, increment]
+  chapitre varchar
+  user varchar
+}
 
 Table chapitre as CH {
   id int [pk, increment] // auto-increment
@@ -31,6 +46,7 @@ Table chapitre as CH {
   suivant varchar
   manga varchar
 }
+Ref: L.chapitre > CH.id
 
 Table image as I {
   id int [pk, increment] // auto-increment

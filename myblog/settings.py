@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'myapp1',
     'forum',
     'base',
+    'manga',
+    'chapitre',
 ]    
 
 MIDDLEWARE = [
