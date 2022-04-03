@@ -1,7 +1,10 @@
+from email.mime import image
+from itertools import count
 from django.utils.text import slugify
 from django.db import models
 
 from manga.models import Manga
+
 
 #   model chapitre
 class Chapitre(models.Model):
@@ -28,3 +31,23 @@ class Commentairechapitre(models.Model):
         #return self.pseudo
         return "%s %s" % ( self.date, self.pseudo)
 
+class Likechapitre(models.Model):
+    pseudo = models.CharField(max_length=30, default='')
+    chapitre = models.ForeignKey(Chapitre, null=True, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return "%s %s" % ( self.pseudo, self.chapitre)
+
+class Imageschapitre(models.Model):
+    image = models.ImageField(default='', blank=True, upload_to='images')
+    chapitre = models.ForeignKey(Chapitre, null=True, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return "%s %s" % ( self.image, self.chapitre)
+
+class Vuechapitre(models.Model):
+    pseudo = models.CharField(max_length=30, default='')
+    chapitre = models.ForeignKey(Chapitre, null=True, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return "%s %s" % ( self.pseudo, self.chapitre)

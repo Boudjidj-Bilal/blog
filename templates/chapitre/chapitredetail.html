@@ -1,5 +1,23 @@
 {% extends 'base/base.html' %}
 {% block content %}
-   <h1>{{chapitrehtml.name}}</h1>
-   {{chapitrehtml.description}}
+<div class="contenair">
+   <div class="row">
+            <h1>{{chapitrehtml.name}}</h1>
+            {{chapitrehtml.description}}
+            {% for image in imageshtml %}
+               <div class="col-12">
+                  <img class= "img-fluid max-width:100% height:auto" src="{{ image.image.url }}" >
+               </div>
+            {% endfor %}
+   </div>
+   <p>
+   <a href="{% url 'addcomments'  chapitrehtml.id %}" class="btn btn-primary btn-lg" tabindex="-1" role="button" aria-disabled="true">add comments</a> {{ commentshtml|length }} 
+   <a href="{% url 'addlike' chapitrehtml.id %}" class="btn btn-primary btn-lg" tabindex="-1" role="button" aria-disabled="true">add like</a> {{ likehtml|length }} 
+   <p>
+   {% for comment in commentshtml %}
+   <h3>{{comment.pseudo}}  <a href="{% url 'deletecomments'  comment.id %}" class="btn btn-primary btn-lg" tabindex="-1" role="button" aria-disabled="true">delete comments</a></h3>
+   <h5>{{comment.date}}</h5>
+   {{comment.comment}}
+   {% endfor %}
+</div>
 {% endblock %}

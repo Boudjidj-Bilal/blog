@@ -4,3 +4,4 @@ from manga.models import Manga
 
 # Register your models here.
 admin.site.register(Manga)
+
