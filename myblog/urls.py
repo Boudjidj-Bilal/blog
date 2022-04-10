@@ -23,6 +23,7 @@ urlpatterns = [
     path('', include('manga.urls')),
     path('chapitre/', include('chapitre.urls')),
     path('old/', include('myapp1.urls')),
+    path('accounts/', include('allauth.urls')),
 ] 
 
 

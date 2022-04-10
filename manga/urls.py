@@ -7,5 +7,4 @@ from manga import views
 urlpatterns = [
     path('',views.manga,name='pagemanga'),
     path('manga/<slug:slug>/',views.mangadetail,name='pagedetailmanga'),
-    path('manga/bidon/',views.bidon,name='bidon'),
 ]

@@ -2,7 +2,8 @@
 {% block content %}
 <div class="contenair">
    <div class="row">
-            <h1>{{chapitrehtml.name}}</h1>
+            <h1>{{chapitrehtml.name}} nombre de vues: {{vueshtml|length}}</h1> 
+            
             {{chapitrehtml.description}}
             {% for image in imageshtml %}
                <div class="col-12">

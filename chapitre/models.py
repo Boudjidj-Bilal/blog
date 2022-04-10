@@ -22,7 +22,7 @@ class Chapitre(models.Model):
 
 #   model commentaire
 class Commentairechapitre(models.Model):
-    pseudo = models.CharField(max_length=30, default='')
+    pseudo = models.CharField(max_length=30, blank=True)
     comment = models.TextField(default='')
     date = models.CharField(max_length=30, default='')
     chapitre = models.ForeignKey(Chapitre,  null=True, on_delete=models.CASCADE)
