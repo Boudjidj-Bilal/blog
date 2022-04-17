@@ -49,11 +49,19 @@ def chapitredetail(request, slug=None):
     comments = Commentairechapitre.objects.filter (chapitre_id = chapitre.id) #récupère tous les commentaires appartenant a un chapitre donné par son id
     likes = Likechapitre.objects.filter (chapitre_id = chapitre.id) #récupère tous les likes appartenant a un chapitre donné par son id 
     images = Imageschapitre.objects.filter (chapitre_id = chapitre.id) #récupère toutes les images appartenant a un chapitre donné par son id
-    vue = Vuechapitre.objects.create() #créée une vue sans aucun champs remplis
-    vue.pseudo = request.user.username # ajouter l'utilisateur qui a vue
-    vue.chapitre = chapitre # remplir le champ chapitre de la vue 
-    vue.save() #sauvegarder le vue dans la base de donnée
-    vues = Vuechapitre.objects.all() #récupère toutes les vues
+    userconnected = request.user.username #récupère l'utilisateur connecté
+    if (userconnected):
+        vueuserchap = Vuechapitre.objects.filter (pseudo=userconnected, chapitre_id=chapitre) #récupère la vue qui correspond a un utilisateur données et un chapitre
+        if (not vueuserchap):  #si il n'existe pas   
+                    vue = Vuechapitre.objects.create() #créée une vue sans aucun champs remplis
+                    vue.pseudo = request.user.username # ajouter l'utilisateur qui a vue
+                    vue.chapitre = chapitre # remplir le champ chapitre de la vue 
+                    vue.save() #sauvegarder le vue dans la base de donnée
+        else:
+            pass
+    else: 
+        pass
+    vues = Vuechapitre.objects.filter(chapitre_id=chapitre) #récupère toutes les vues qui correponde au chapitre donnée
     return render(request, 'chapitre/chapitredetail.html',{'chapitrehtml': chapitre , 'commentshtml': comments , 'likehtml': likes, 'imageshtml': images, 'vueshtml': vues}) #renvoie à la page chapitredetail
 
 """

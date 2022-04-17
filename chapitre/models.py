@@ -11,7 +11,7 @@ class Chapitre(models.Model):
     name = models.CharField(max_length=255, default='')
     description = models.TextField(default='')
     slug = models.SlugField(blank=True, default='')
-    manga = models.ForeignKey(Manga, null=True, on_delete=models.CASCADE)
+    manga = models.ForeignKey(Manga, null=True, on_delete=models.CASCADE) #un chapitre appartient à un seul manga
 
     def __str__(self):
         return self.name

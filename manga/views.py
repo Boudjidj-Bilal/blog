@@ -21,3 +21,5 @@ def mangadetail(request, slug=None):
 
     return render(request, 'manga/mangadetail.html', {'chapitreshtml': chapitre,'mangadetailhtml': manga}) #crée la page contenat le manga spécifique avec tous ces chapitres 
 
+
+

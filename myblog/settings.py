@@ -46,10 +46,12 @@ INSTALLED_APPS = [
     'base',
     'manga',
     'chapitre',
+    'useraccount',
 ]    
 SITE_ID = 1
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 LOGIN_REDIRECT_URL = '/'
+AUTH_USER_MODEL = "useraccount.User"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
