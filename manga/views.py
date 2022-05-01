@@ -2,8 +2,11 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 
 from chapitre.models import Chapitre
+from manga.forms import MangaForm
 
 from .models import Manga
+
+from django.contrib.auth.decorators import login_required
 
 """
 la fonction "manga" permet d'afficher la liste de tous les mangas
@@ -21,5 +24,18 @@ def mangadetail(request, slug=None):
 
     return render(request, 'manga/mangadetail.html', {'chapitreshtml': chapitre,'mangadetailhtml': manga}) #crée la page contenat le manga spécifique avec tous ces chapitres 
 
+@login_required
+def addmanga(request):
+    if request.method == 'POST': #SI l'utilisateur ajoute un manga alors effectue la suite:
+        form = MangaForm(request.POST, request.FILES) #récupère tout les champs du formulair remplis par l'utilisateur
+        if form.is_valid(): #vérifier si tout les champs remplis par l'utilisateur son valide,
+            manga = form.save(commit=False) # récupère le contenus du formulaire (pseudo,comment)
+            manga.user = request.user # ajouter l'utilisateur qui a commenté
+            #manga.date = datetime.now().strftime('%H:%M:%S') #ajouter la date du manga
+            manga.save() #sauvegarder le manga dans la base de donnée
+            return redirect('pageprofil',request.user.id) #rediriger vers la page profil.html d'un utilisateur
+    else: #SINON effectue la suite:
+        form = MangaForm() #envoyer le formulair vide pour être saisis par l'utilisateur
+    return render(request, 'manga/formulaireaddmanga.html', {'form': form}) #renvoie à la page formulaireaddmanga
 
 

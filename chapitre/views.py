@@ -4,8 +4,9 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
-from chapitre.forms import CommentairechapitreForm
+from chapitre.forms import ChapitreForm, CommentairechapitreForm
 from chapitre.models import Chapitre, Commentairechapitre, Imageschapitre, Likechapitre, Vuechapitre
+from manga.models import Manga
 
 
 """
@@ -65,7 +66,7 @@ def chapitredetail(request, slug=None):
     return render(request, 'chapitre/chapitredetail.html',{'chapitrehtml': chapitre , 'commentshtml': comments , 'likehtml': likes, 'imageshtml': images, 'vueshtml': vues}) #renvoie à la page chapitredetail
 
 """
-la donction "addlike" permet d'ajouter un like dans la base de donnée pour un chapitre
+la fonction "addlike" permet d'ajouter un like dans la base de donnée dans la table like
 """
 @login_required
 def addlike(request, id=None):
@@ -76,3 +77,20 @@ def addlike(request, id=None):
     like.save() #sauvegarder le commentaire dans la base de donnée
     return redirect('chapitredetail',like.chapitre.slug) #rediriger vers la page chapitredetail
 
+"""
+la fonction "addchapitre" permet de ajoter un chapitre dans la base de donnée dans la table chapitre
+"""
+@login_required
+def addchapitre(request, id=None):
+    if request.method == 'POST': #SI l'utilisateur ajoute un chapitre alors effectue la suite:
+        form = ChapitreForm(request.POST) #récupère tout les champs du formulair remplis par l'utilisateur
+        if form.is_valid(): #vérifier si tout les champs remplis par l'utilisateur son valide,
+            chapitre = form.save(commit=False) # récupère le contenus du formulaire (pseudo,comment)
+            chapitre.manga = Manga.objects.get(id=id) # ajouter le chapitre concerné par le manga
+            #manga.user = request.user # ajouter l'utilisateur qui a commenté
+            #manga.date = datetime.now().strftime('%H:%M:%S') #ajouter la date du manga
+            chapitre.save() #sauvegarder le manga dans la base de donnée
+            return redirect('/',request.user.id) #rediriger vers la page profil.html d'un utilisateur
+    else: #SINON effectue la suite:
+        form = ChapitreForm() #envoyer le formulair vide pour être saisis par l'utilisateur
+    return render(request, 'chapitre/formulaireaddchapitre.html', {'form': form}) #renvoie à la page formulaireaddmanga
