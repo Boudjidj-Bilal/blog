@@ -4,3 +4,4 @@
 
 # A FAIRE
 - régler le problème des vues qui s'accumule
+-régler le problème du slug

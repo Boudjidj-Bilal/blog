@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
-from chapitre.forms import ChapitreForm, CommentairechapitreForm
+from chapitre.forms import ChapitreForm, CommentairechapitreForm, ImageschapitreForm
 from chapitre.models import Chapitre, Commentairechapitre, Imageschapitre, Likechapitre, Vuechapitre
 from manga.models import Manga
 
@@ -81,7 +81,7 @@ def addlike(request, id=None):
 la fonction "addchapitre" permet de ajoter un chapitre dans la base de donnée dans la table chapitre
 """
 @login_required
-def addchapitre(request, id=None):
+def addchapitre(request, id=None): # le id représente le id de manga
     if request.method == 'POST': #SI l'utilisateur ajoute un chapitre alors effectue la suite:
         form = ChapitreForm(request.POST) #récupère tout les champs du formulair remplis par l'utilisateur
         if form.is_valid(): #vérifier si tout les champs remplis par l'utilisateur son valide,
@@ -89,8 +89,21 @@ def addchapitre(request, id=None):
             chapitre.manga = Manga.objects.get(id=id) # ajouter le chapitre concerné par le manga
             #manga.user = request.user # ajouter l'utilisateur qui a commenté
             #manga.date = datetime.now().strftime('%H:%M:%S') #ajouter la date du manga
-            chapitre.save() #sauvegarder le manga dans la base de donnée
-            return redirect('/',request.user.id) #rediriger vers la page profil.html d'un utilisateur
+            chapitre.save() #sauvegarder le chapitre dans la base de donnée
+            return redirect('pagedetailmanga',chapitre.manga.slug) #rediriger vers la page chapitre d'un utilisateur
     else: #SINON effectue la suite:
         form = ChapitreForm() #envoyer le formulair vide pour être saisis par l'utilisateur
     return render(request, 'chapitre/formulaireaddchapitre.html', {'form': form}) #renvoie à la page formulaireaddmanga
+
+@login_required
+def addimagechapitre(request, id=None):
+    if request.method == 'POST': #SI l'utilisateur ajoute une image alors effectue la suite:
+        form = ImageschapitreForm(request.POST, request.FILES) #récupère tout les champs du formulair remplis par l'utilisateur
+        if form.is_valid(): #vérifier si tout les champs remplis par l'utilisateur son valide
+            imagename = form.save(commit=False) # récupère le contenus du formulaire (pseudo,comment)
+            imagename.chapitre = Chapitre.objects.get(id=id) # ajouter l'image concerné par le chapitre
+            imagename.save() #sauvegarder l'image dans la base de donnée
+            return redirect('chapitredetail',imagename.chapitre.slug) #rediriger vers la page chapitre d'un utilisateur
+    else: #SINON effectue la suite:
+        form = ImageschapitreForm() #envoyer le formulair vide pour être saisis par l'utilisateur
+        return render(request, 'chapitre/formulaireaddimage.html', {'form': form}) #renvoie à la page formulaireadd
