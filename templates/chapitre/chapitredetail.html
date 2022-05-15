@@ -14,10 +14,15 @@
    <p>
    <a href="{% url 'addcomments'  chapitrehtml.id %}" class="btn btn-primary btn-lg" tabindex="-1" role="button" aria-disabled="true">add comments</a> {{ commentshtml|length }} 
    <a href="{% url 'addlike' chapitrehtml.id %}" class="btn btn-primary btn-lg" tabindex="-1" role="button" aria-disabled="true">add like</a> {{ likehtml|length }} 
-   <a href="{% url 'addimage' chapitrehtml.id %}" class="btn btn-primary btn-lg" tabindex="-1" role="button" aria-disabled="true">add image</a>
+      {% if request.user.username == chapitrehtml.manga.user.username %}
+      <a href="{% url 'addimage' chapitrehtml.id %}" class="btn btn-primary btn-lg" tabindex="-1" role="button" aria-disabled="true">add image</a>
+      {% endif %}
    <p>
    {% for comment in commentshtml %}
-   <h3>{{comment.pseudo}}  <a href="{% url 'deletecomments'  comment.id %}" class="btn btn-primary btn-lg" tabindex="-1" role="button" aria-disabled="true">delete comments</a></h3>
+   <h3>{{comment.pseudo}} 
+      {% if request.user.username == comment.pseudo %}
+      <a href="{% url 'deletecomments'  comment.id %}" class="btn btn-primary btn-lg" tabindex="-1" role="button" aria-disabled="true">delete comments</a></h3>
+      {% endif %}
    <h5>{{comment.date}}</h5>
    {{comment.comment}}
    {% endfor %}
