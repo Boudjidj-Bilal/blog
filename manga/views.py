@@ -2,7 +2,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 
 from chapitre.models import Chapitre
-from manga.forms import MangaForm
+from manga.forms import MangaEditForm, MangaForm
 
 from .models import Manga
 
@@ -37,5 +37,24 @@ def addmanga(request):
     else: #SINON effectue la suite:
         form = MangaForm() #envoyer le formulair vide pour être saisis par l'utilisateur
     return render(request, 'manga/formulaireaddmanga.html', {'form': form}) #renvoie à la page formulaireaddmanga
+
+@login_required
+def editmanga(request, id=None): #le id est celui du manga
+    manga = Manga.objects.get(id=id)
+    if request.method == 'POST': #SI l'utilisateur ajoute un manga alors effectue la suite:
+        form = MangaEditForm(request.POST, request.FILES, instance=manga) #récupère tout les champs du formulair remplis par l'utilisateur
+        if form.is_valid(): #vérifier si tout les champs remplis par l'utilisateur son valide
+            manganew = form.save(commit=False) # récupère le contenus du formulaire (pseudo,comment)
+            manganew.save() #sauvegarder le manga dans la base de donnée
+            return redirect('pageprofil',request.user.id) #rediriger vers la page profil.html d'un utilisateur
+    else: #SINON effectue la suite:
+        form = MangaEditForm(instance=manga) #envoyer le formulair vide pour être saisis par l'utilisateur
+    return render(request, 'manga/formulaireaddmanga.html', {'form': form}) #renvoie à la page formulaireaddmanga
+
+@login_required
+def deletemanga(request, id=None): #le id est celui du manga
+    manga = Manga.objects.get(id=id)
+    manga.delete()
+    return redirect('pageprofil',request.user.id) #rediriger vers la page profil.html d'un utilisateur
 
 
