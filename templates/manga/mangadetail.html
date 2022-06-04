@@ -12,6 +12,11 @@
       <div>
       {% for chapitre in chapitreshtml %} 
       <h1><a href="{% url 'chapitredetail' chapitre.slug %}" target="_self">{{chapitre.name}}</a></h1>  
+
+      {% if request.user.username == mangadetailhtml.user.username %}
+      <a href="{% url 'editchapitre' chapitre.id %}" target="_self" class="bb-mangaeditchapitre">editchapitre</a>
+      {% endif %}
+
       {{ chapitre.description }}
          <br>
       {% endfor %}  

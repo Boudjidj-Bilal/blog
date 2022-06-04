@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
-from chapitre.forms import ChapitreForm, CommentairechapitreForm, ImageschapitreForm
+from chapitre.forms import ChapitreEditForm, ChapitreForm, CommentairechapitreForm, ImageschapitreForm
 from chapitre.models import Chapitre, Commentairechapitre, Imageschapitre, Likechapitre, Vuechapitre
 from manga.models import Manga
 
@@ -16,8 +16,8 @@ la fonction "deletecommentaire" permet de suprimer des commentaires dans la base
 def deletecommentaire(request, id=None): 
     deletecomment = Commentairechapitre.objects.get(id=id) #récupère le commentaire à suprimer
     userconnected = request.user.username #récupère l'utilisateur connecté
-    user = deletecomment.pseudo #récupère la personne qui a commenté 
-    if user == userconnected: #SI la personne qui est connecté est aussi la personne qui a commenté
+    username = deletecomment.user.username #récupère la personne qui a commenté 
+    if username == userconnected: #SI la personne qui est connecté est aussi la personne qui a commenté
         deletecomment.delete() #suprimer le commentaire récupéré 
     return redirect('chapitredetail',deletecomment.chapitre.slug) #rediriger vers la page chapitredetail
 
@@ -32,9 +32,9 @@ def addcommentaire(request, id=None):
     if request.method == 'POST': #SI l'utilisateur ajoute un commentaire alors effectue la suite:
         form = CommentairechapitreForm(request.POST) #récupère tout les champs du formulair remplis par l'utilisateur
         if form.is_valid(): #vérifier si tout les champs remplis par l'utilisateur son valide,
-            commentaire = form.save(commit=False) # récupère le contenus du formulaire (pseudo,comment)
+            commentaire = form.save(commit=False) # récupère le contenus du formulaire (user,comment)
             commentaire.chapitre = Chapitre.objects.get(id=id) # ajouter le chapitre concerné par le commentaire
-            commentaire.pseudo = request.user.username # ajouter l'utilisateur qui a commenté
+            commentaire.user = request.user # ajouter l'utilisateur qui a commenté
             commentaire.date = datetime.now().strftime('%H:%M:%S') #ajouter la date du commentaire
             commentaire.save() #sauvegarder le commentaire dans la base de donnée
             return redirect('chapitredetail',commentaire.chapitre.slug) #rediriger vers la page chapitredetail
@@ -52,10 +52,10 @@ def chapitredetail(request, slug=None):
     images = Imageschapitre.objects.filter (chapitre_id = chapitre.id) #récupère toutes les images appartenant a un chapitre donné par son id
     userconnected = request.user.username #récupère l'utilisateur connecté
     if (userconnected):
-        vueuserchap = Vuechapitre.objects.filter (pseudo=userconnected, chapitre_id=chapitre) #récupère la vue qui correspond a un utilisateur données et un chapitre
+        vueuserchap = Vuechapitre.objects.filter (user=userconnected, chapitre_id=chapitre) #récupère la vue qui correspond a un utilisateur données et un chapitre
         if (not vueuserchap):  #si il n'existe pas   
                     vue = Vuechapitre.objects.create() #créée une vue sans aucun champs remplis
-                    vue.pseudo = request.user.username # ajouter l'utilisateur qui a vue
+                    vue.user = request.user.username # ajouter l'utilisateur qui a vue
                     vue.chapitre = chapitre # remplir le champ chapitre de la vue 
                     vue.save() #sauvegarder le vue dans la base de donnée
         else:
@@ -70,12 +70,19 @@ la fonction "addlike" permet d'ajouter un like dans la base de donnée dans la t
 """
 @login_required
 def addlike(request, id=None):
-    chapitre = get_object_or_404(Chapitre, id=id) #récupérer un chapitre donné par son id
-    like = Likechapitre.objects.create() #je creer un like sans aucun champs remplis
-    like.pseudo = "bilal" # remplir le champ pseudo du like
-    like.chapitre = chapitre # remplir le champ chapitre du like
-    like.save() #sauvegarder le commentaire dans la base de donnée
-    return redirect('chapitredetail',like.chapitre.slug) #rediriger vers la page chapitredetail
+      user = request.user #récupère l'utilisateur connecté 
+    #   slug = like.chapitre.slug
+      chapitre = get_object_or_404(Chapitre, id=id) #récupérer un chapitre donné par son id que l'on veut liker
+      likeexistindb = Likechapitre.objects.filter(user = user.id, chapitre = chapitre.id) #vérifier dans la base de données si il y a au moins une ligne contenent l'user connecté et le chapitre concerné 
+      if (likeexistindb.count() == 0): #si il n'y a pas de like alors effectue la suite
+        like = Likechapitre.objects.create() #je creer un like sans aucun champs remplis
+        like.user = user # remplir le champ user du like
+        like.chapitre = chapitre # remplir le champ chapitre du like
+        like.save() #sauvegarder le commentaire dans la base de donnée
+      else: #sinon il y a deja un like
+        likeexistindb.delete() #alors surprime tous les likes concerné par l'user qui a liké un même chapitre
+      return redirect('chapitredetail',chapitre.slug) #rediriger vers la page chapitredetail
+    
 
 """
 la fonction "addchapitre" permet de ajoter un chapitre dans la base de donnée dans la table chapitre
@@ -85,7 +92,7 @@ def addchapitre(request, id=None): # le id représente le id de manga
     if request.method == 'POST': #SI l'utilisateur ajoute un chapitre alors effectue la suite:
         form = ChapitreForm(request.POST) #récupère tout les champs du formulair remplis par l'utilisateur
         if form.is_valid(): #vérifier si tout les champs remplis par l'utilisateur son valide,
-            chapitre = form.save(commit=False) # récupère le contenus du formulaire (pseudo,comment)
+            chapitre = form.save(commit=False) # récupère le contenus du formulaire (user,comment)
             chapitre.manga = Manga.objects.get(id=id) # ajouter le chapitre concerné par le manga
             #manga.user = request.user # ajouter l'utilisateur qui a commenté
             #manga.date = datetime.now().strftime('%H:%M:%S') #ajouter la date du manga
@@ -100,10 +107,23 @@ def addimagechapitre(request, id=None):
     if request.method == 'POST': #SI l'utilisateur ajoute une image alors effectue la suite:
         form = ImageschapitreForm(request.POST, request.FILES) #récupère tout les champs du formulair remplis par l'utilisateur
         if form.is_valid(): #vérifier si tout les champs remplis par l'utilisateur son valide
-            imagename = form.save(commit=False) # récupère le contenus du formulaire (pseudo,comment)
+            imagename = form.save(commit=False) # récupère le contenus du formulaire (user,comment)
             imagename.chapitre = Chapitre.objects.get(id=id) # ajouter l'image concerné par le chapitre
             imagename.save() #sauvegarder l'image dans la base de donnée
             return redirect('chapitredetail',imagename.chapitre.slug) #rediriger vers la page chapitre d'un utilisateur
     else: #SINON effectue la suite:
         form = ImageschapitreForm() #envoyer le formulair vide pour être saisis par l'utilisateur
         return render(request, 'chapitre/formulaireaddimage.html', {'form': form}) #renvoie à la page formulaireadd
+
+@login_required
+def editchapitre(request, id=None): #le id est celui du chapitre
+    chapitre = Chapitre.objects.get(id=id)
+    if request.method == 'POST': #SI l'utilisateur ajoute un chapitre alors effectue la suite:
+        form = ChapitreEditForm(request.POST, request.FILES, instance=chapitre) #récupère tout les champs du formulair remplis par l'utilisateur
+        if form.is_valid(): #vérifier si tout les champs remplis par l'utilisateur son valide
+            chapitrenew = form.save(commit=False) # récupère le contenus du formulaire (name,description)
+            chapitrenew.save() #sauvegarder le chapitre dans la base de donnée
+            return redirect('pagedetailmanga', chapitrenew.manga.slug) #rediriger vers la page detailmanga d'un utilisateur
+    else: #SINON effectue la suite:
+        form = ChapitreEditForm(instance=chapitre) #envoyer le formulair vide pour être saisis par l'utilisateur
+    return render(request, 'chapitre/formulaireeditchapitre.html', {'form': form}) #renvoie à la page formulaireeditchapitre
