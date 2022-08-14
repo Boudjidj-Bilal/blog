@@ -1,73 +1,22 @@
 {% load static %}
-{% comment %} <div class="row">
-    <div class="nav-scroller py-1 mb-2">
-       <nav class="nav d-flex">
-         <a class="p-2 text-muted" href="{% url 'pagemaison' %}" target="_self">home</a>
-         <a class="p-2 text-muted" href="{% url 'pagemanga' %}" target="_self">manga</a>
-         <a class="p-2 text-muted" href="{% url 'account_login' %}" target="_self">login</a>
-         <a class="p-2 text-muted" href="{% url 'account_logout' %}" target="_self">logout</a>
-         <span>
+   
+
+<nav class="navbar">
+      <a href="">MW</a>
+      <ul class="mobile inactif"  id="menu">
+            <li><a class="elementmenu" href="{% url 'pagemanga' %}">home</a></li>
+            <li><a class="elementmenu" href="{% url 'account_login' %}">login</a></li>
+            <li><a class="elementmenu" href="{% url 'account_logout' %}">logout</a></li>
             {% if request.user.username %}
-               {{ request.user.username }}
-            {% else  %}
-               &nbsp
+              <li>
+                <a class="elementmenu" href="{% url 'pageprofil' request.user.id %}" target="_self">{{ request.user.username }}
+                </a>
+              </li>
             {% endif %}
-         </span>
-       </nav>
-    </div>
-  </div> {% endcomment %}
+      </ul>
 
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-   <div class="container-fluid">
-     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
-       <span class="navbar-toggler-icon"></span>
-     </button>
-     <a class="navbar-brand" href="{% url 'pagemanga' %}">
-      {% comment %} <img src="{% static 'images/logo.svg' %}" alt="" width="30" height="24"> {% endcomment %}
-      MW
-     </a>
-     <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-         
-         <li class="nav-item">
-           <a class="nav-link" href="{% url 'pagemaison' %}" target="_self">home</a>
-         </li>
-         <li class="nav-item">
-           <a class="nav-link" href="{% url 'pagemanga' %}" target="_self">manga</a>
-         </li>
-         <li class="nav-item">
-            <a class="nav-link" href="{% url 'account_login' %}" target="_self">login</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'account_logout' %}" target="_self">logout</a>
-          </li>
-          
-         
-         
-     
 
-       </ul>
-
-       
-       <form class="d-flex me-auto">
-         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-         <button class="btn btn-outline-success" type="submit">Search</button>
-       </form>
-       {% comment %} <span class="bb-ms-1">
-         {% if request.user.username %}
-         {{ request.user.username }}
-      {% else  %}
-         &nbsp
-      {% endif %}
-       </span> {% endcomment %}
-       {% if request.user.username %}
-       <ul class="navbar-nav  mb-2 mb-lg-0">
-         
-         <li class="nav-item">
-           <a class="nav-link" href="{% url 'pageprofil' request.user.id %}" target="_self">{{ request.user.username }}
-         </a>
-         </li>
-         {% endif %}
-     </div>
-   </div>
+      <span id="humberger">
+          <i class="fa-solid fa-bars" ></i>
+      </span>
  </nav>

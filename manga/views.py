@@ -13,7 +13,7 @@ la fonction "manga" permet d'afficher la liste de tous les mangas
 """
 def manga(request):
     mangaliste = Manga.objects.all() #récupère tous la liste des mangas
-    return render(request, 'manga/manga.html', {'mangahtml': mangaliste }) #crée la page de la liste des mangas
+    return render(request, 'manga/manga.html', {'mangalistehtml': mangaliste }) #crée la page de la liste des mangas
 
 """
 la fonction "mangadetail" permet d'afficher le manga données avec les chapitres qui lui appartient

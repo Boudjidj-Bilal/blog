@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;500;700;900&display=swap');
+
+/* reinitialisation à 0 */
+*, h1, h2 {
+    margin: 0; /* la marge sur les quatre coté sont de 0 */
+    padding: 0; /* les écarts de remplissage sur les quatres cotés sont de 0 */
+    box-sizing: border-box; /* garder la taille de la fenêtre fixe defini par width */
+    font-family: 'Roboto', sans-serif; /* style d'écriture sans serif */
+}
+
+.navbar{
+    background-color: #f8faf9; /* couleur du menu gris */
+    padding: 10px; /* laisse un écart interne à ses enfants de 20px */
+    display: flex; /* les éléments à l'intérieur de li se réafiche lorsque l'écrant s'agrandis */
+    flex-direction: row; /* les élément s'affiche a la suite en ligne*/
+    justify-content: space-between; /* laisse un espace égale maximal entres les éléments enfants*/
+    border-bottom: 1px solid rgb(190, 190, 190);
+    position: relative;
+}
+
+.navbar ul{
+    list-style: none; /* cacher les point qui se mettent automatiquement devant l'élément li */
+    /* display: none; les éléments à l'intérieur de li serons caché */
+    flex-direction: column; /* les élément s'affiche a la suite en ligne*/
+}
+
+.navbar li{
+    margin-left: 30px; /* laisse un espace externe de 30px*/
+}
+
+.navbar li a{
+    font-size: 1em; /* taille du texte 1em */
+}
+
+.navbar a{
+    font-size: 1.2em; /* taille du texte 1em */
+}
+
+.navbar a:hover{
+    /* background-color: aqua; affiche une couleur de fond bleu lrosque la souris passe sur l'éléments */
+}
+
+.navbar li a:hover{
+    /* background-color: aqua; affiche une couleur de fond bleu lrosque la souris passe sur l'éléments */
+    font-size: 1.2em; /*taille du texte 1em*/
+    letter-spacing: 1px;
+}
+
+.fa-solid.fa-bars{
+    display: flex;
+    cursor: pointer;
+}
+
+@media (min-width: 599px){
+    .navbar ul{
+        display: flex; /* les éléments à l'intérieur de li se réafiche lorsque l'écrant s'agrandis */
+        flex-direction: row; /* les élément s'affiche a la suite en ligne*/
+    }
+    .navbar{
+        padding: 15px; /* laisse un écart interne à ses enfants de 20px */
+        justify-content: start; /* laisse un espace égale maximal entres les éléments enfants*/
+    }
+    .fa-solid.fa-bars{
+        display: none; /* cache l'icone humberger */
+    }
+    
+}
+
+@media (max-width: 600px){
+    .mobile{
+        top: 45px; /* l'image laisse 0px d'espace en haut */
+        left: 0px; /* l'image laisse 0px d'espace à gauche */
+        right: 0px; /* l'image laisse 0px d'espace à droite */
+        bottom: 0; /* l'image laisse 0px d'espace en bas */
+        position: absolute; /* permet de décrocher l'élément de son affichage normal, les élément qui le suive prennent sa place, sa position sera définit selon top, bottom, etc. */
+        height: 300px;
+        width: 100%;
+        border: 2px solid black;
+        justify-content: center;
+        text-align: center; 
+        align-items: center;
+        z-index: 10;
+        background-color: white;
+    }
+    .actif{
+        display: flex; 
+    }
+    .inactif{
+        display: none;
+    }
+}

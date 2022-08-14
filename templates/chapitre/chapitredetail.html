@@ -1,30 +1,50 @@
 {% extends 'base/base.html' %}
+{% load static %}
+
 {% block content %}
-<div class="contenair">
-   <div class="row">
-            <h1>{{chapitrehtml.name}} nombre de vues: {{ vueshtml|length }}</h1> 
+
+      <div class="contenair">
+            <div class="row">
+                     <h1 id="changecomment" data-derniercode='{{codehtml}}' data-chapitreid='{{chapitrehtml.id}}'>{{chapitrehtml.name}} nombre de vues: {{ vueshtml|length }}</h1> 
+                     
+                     {{chapitrehtml.description}}
+                     {% for image in imageshtml %}
+                        <div class="col-12">
+                           <img class= "img-fluid max-width:100% height:auto" src="{{ image.imagename.url }}" >
+                        </div>
+                     {% endfor %}
+            </div>
             
-            {{chapitrehtml.description}}
-            {% for image in imageshtml %}
-               <div class="col-12">
-                  <img class= "img-fluid max-width:100% height:auto" src="{{ image.imagename.url }}" >
-               </div>
-            {% endfor %}
-   </div>
-   <p>
-   <a href="{% url 'addcomments'  chapitrehtml.id %}" class="btn btn-primary btn-lg" tabindex="-1" role="button" aria-disabled="true">add comments</a> {{ commentshtml|length }} 
-   <a href="{% url 'addlike' chapitrehtml.id %}" class="btn btn-primary btn-lg" tabindex="-1" role="button" aria-disabled="true">add like</a> {{ likehtml|length }} 
-      {% if request.user.username == chapitrehtml.manga.user.username %}
-      <a href="{% url 'addimage' chapitrehtml.id %}" class="btn btn-primary btn-lg" tabindex="-1" role="button" aria-disabled="true">add image</a>
-      {% endif %}
-   <p>
-   {% for comment in commentshtml %}
-   <h3>{{comment.pseudo}} 
-      {% if request.user.username == comment.pseudo %}
-      <a href="{% url 'deletecomments'  comment.id %}" class="btn btn-primary btn-lg" tabindex="-1" role="button" aria-disabled="true">delete comments</a></h3>
-      {% endif %}
-   <h5>{{comment.date}}</h5>
-   {{comment.comment}}
-   {% endfor %}
-</div>
+            <a href="{% url 'addcomments'  chapitrehtml.id %}" class="btn btn-primary btn-lg" tabindex="-1" role="button" aria-disabled="true">add comments</a> {{ commentshtml|length }} 
+            
+            <a href="{% url 'addlike' chapitrehtml.id %}" class="btn btn-primary btn-lg" tabindex="-1" role="button" aria-disabled="true">add like</a> {{ likehtml|length }} 
+
+            <button {% if not request.user.username %} disabled {% endif %} id="like" class="btn btn-primary btn-lg" role="button" aria-disabled="true">add like JS</button> <span id='nombreDeLike' data-chapitreid='{{chapitrehtml.id}}'>{{ likehtml|length }} </span> 
+               
+               {% if request.user.username == chapitrehtml.manga.user.username %}
+                  <a href="{% url 'addimage' chapitrehtml.id %}" class="btn btn-primary btn-lg" tabindex="-1" role="button" aria-disabled="true">add image</a>
+               {% endif %}
+
+            <div id="contenaircommentairs">
+              
+                  {% for comment in commentshtml %}
+                     <div id='comment-{{comment.id}}' class='classcomments' style="border-color: red;" >
+                           <h3>{{comment.user.username}} </h3>
+                              {% if request.user.username == comment.user.username %}
+                                    {% comment %} <a href="{% url 'deletecomments'  comment.id %}" class="btn btn-primary btn-lg" tabindex="-1" role="button" aria-disabled="true">delete comments</a> {% endcomment %}
+                                    <button {% if not request.user.username %} disabled {% endif %} class="btnDeleteCommente" role="button" aria-disabled="true" data-commentid='{{comment.id}}' >delete comment</button>
+                              {% endif %}
+
+                           <h5>{{comment.date}}</h5>
+                           <span>{{comment.comment}}</span>
+                     </div>
+                  {% endfor %}
+            </div>
+      </div>
+
+{% endblock %}
+
+{% block js %}
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+   <script src="{% static 'chapitre/js/chapitre.js' %}"></script>
 {% endblock %}

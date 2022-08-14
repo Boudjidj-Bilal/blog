@@ -1,0 +1,156 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;500;700;900&display=swap');
+
+/* reinitialisation à 0 */
+*, h1, h2 {
+    margin: 0; /* la marge sur les quatre coté sont de 0 */
+    padding: 0; /* les écarts de remplissage sur les quatres cotés sont de 0 */
+    box-sizing: border-box; /* garder la taille de la fenêtre fixe defini par width */
+    font-family: 'Roboto', sans-serif; /* style d'écriture sans serif */
+}
+
+.container{
+    display: flex; /* les éléments à l'intérieur de container serons en mode flex */
+    flex-direction: row; /* les élément s'affiche a la suite en ligne*/
+    flex-wrap: wrap; /* les élément revienne à la ligne */
+    justify-content: center; /* le replacer au centre */
+    background: #053552;
+    position: relative;
+    min-height: calc(100vh - 54px); /*aficher le background sur la hauteur minimal du container*/
+}
+
+.container .manga{
+    width: 150px;  /* largeur à 150 pixel */
+    height: 230px; /* hauteur à 230 pixel */
+    border: 1px solid rgb(175, 175, 175); /*couleur des bordures du manga*/
+    margin: 13px; /* marge sur les quatre coté à 20 pixel */
+    display: flex; /* les éléments à l'intérieur de manga serons en mode flex */
+    flex-direction: column; /* affiche les élément flexible en colone */
+    border-radius: 10px; /* coin arrondis à 10% */
+    box-shadow: 5px 5px 10px 1px rgba(0, 0, 0, 0.33); /*faire de l'ombre au manga */
+    position: relative; /*position relative pour permettre a ses elements enfants de se positionner relativement à lui*/
+    background: #303132; /*couleur du fon d'écrant*/
+    overflow: hidden; /*cacher lorsque sa depasse*/
+} 
+
+.container .manga img{
+    object-fit: cover; /* redimentionne l'image proprement */
+    /* position: absolute; */
+    width: 100%; /* image prend toute la largeur du parent */
+    height: 80%; /* image prend 80% de la hauteur du parent */
+    display: block; /* affichage de l'image en mode block pour éviter les bordure à cause du mode inline */
+    /* display: none; */
+    border: 0px; /* pas de bordure */
+    transform: scale(1); /* agrendis de 1 l'image */
+    transition: height 0.3s ease-in-out 0s, transform 0.3s ease-in-out 0s, opacity 0.3s ease-in-out 0s; /* animation */
+    
+}
+
+.container .manga:hover{
+    box-shadow: 5px 5px 10px 1px rgb(0, 0, 0); /*faire de l'ombre au manga lorsque la sourit passe dessus*/
+}
+
+.container .manga:hover::after{
+    content: ''; /* ne mets pas de contenus */
+    z-index: 1; /* Laisse une couche de 1%*/
+	top: 0px; /* l'image laisse 0px d'espace en haut */
+	left: 0px; /* l'image laisse 0px d'espace à gauche */
+	right: 0px; /* l'image laisse 0px d'espace à droite */
+	bottom: 0; /* l'image laisse 0px d'espace en bas */
+    position: absolute; /* permet de décrocher l'élément de son affichage normal, les élément qui le suive prennent sa place, sa position sera définit selon top, bottom, etc. */
+    /* width: inherit;
+    height: inherit;  */
+    /* background: rgb(0,4,36);
+    background: linear-gradient(90deg, rgba(0,4,36,1) 0%, rgba(0,4,36,0.5970763305322129) 100%); */
+}
+
+/* .container .manga:hover .triangle{
+    clip-path: fill-box;
+    clip-path: polygon(70% 0, 100% 0, 100% 30%);
+    z-index: 10;
+    position: absolute;
+} */
+
+.container .manga .textemanga{
+     display: flex; /* mode d'affichage des manga display flex */
+     flex-direction: row;  /* afficher les elements en ligne */
+     width: inherit; /* largeur hérité*/
+     overflow: hidden; /* cacher lorsque sa depasse */
+    }
+
+.container .manga .titremanga{
+    width: 100%; /* prend la largeur à 100% de son parents (manga)*/
+    padding: 10px; /* écart avec ces enfants de 10% */
+}
+
+.container .manga .titremanga h1{
+    color: rgb(255, 255, 255); /* couleurpour les charactère */ 
+    font-size: 1.2em; /* taille du texte 1.2em */
+}
+
+
+.container .manga .datemanga{
+    padding: 10px; /* écart avec ces enfants de 10% */
+    display: none; /* cache l'éléments et libère la place */
+}
+
+.container .manga .titremanga p,
+.container .manga .datemanga p
+{
+    font-size: 0.75rem;  /* taille de la police */
+}
+
+.container .manga .titremanga p{
+    display: none; /* cache l'éléments et libère la place */
+}
+
+.container .manga .datemanga p{
+    margin-top: 0.75rem; /* écarts en haut avec son parents de 0.75rem */
+}
+
+.container .manga:hover .textemanga{
+    z-index: 2; /* laisse une couche de 2%*/
+    position: absolute; /* permet de décrocher l'élément de son affichage normal, les élément qui le suive prennent sa place, sa position sera définit selon top, bottom, etc. */
+    flex-direction: column; /* afficher les elements en colone */
+    color: white; /* couleur de police blanche */
+}
+
+.container .manga:hover .datemanga{
+    display: block; /* affiche les élément en mode block car datemanga est dans une div*/
+}
+
+.container .manga:hover img{
+    height: 100%; /* prend 100% de la hauteur de son parent */
+    transform: scale(1.1); /* agrandis de 1.1 l'image*/
+    opacity: 0.5; /* transparence à 0.5 */
+}
+
+
+.container .manga:hover .titremanga{
+    width: 80%; /* prend la largeur à 80% de son parents */
+}
+
+.container .manga:hover .titremanga p{
+     display: inline; /* affiche les élément en mode inline pour rétablir le comportement inline*/
+}
+
+/* pour l'ordinateur:  */
+@media (min-width: 1040px){
+    /* .container .manga:last-child {
+        
+    } */
+    .container {
+        justify-content: left; /* affiche les l'élément à gauche */
+    
+    }
+    .container .manga{
+        width: 200px; /* prend 200px de largeur */
+        height: 300px; /* prend 300px de hauteur */
+    }
+    
+    .container .manga .titremanga h1{
+        font-size: 1.4em; /* taille de police de 1.4em*/
+
+    }
+
+
+    }

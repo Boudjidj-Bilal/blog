@@ -1,0 +1,52 @@
+ 
+# -------------------------------------------------------------------------
+
+
+from functools import wraps
+from django.conf import settings
+from django.shortcuts import redirect
+
+import json
+
+def ajax_login_required(function):
+    def wrap(request, *args, **kwargs):
+        if request.user.is_authenticated():
+            return function(request, *args, **kwargs)
+        json = json.dumps({ 'not_authenticated': True })
+        return JsonResponse(json, mimetype='application/json')  
+    wrap.__doc__ = function.__doc__
+    wrap.__name__ = function.__name__
+    return wrap
+
+
+
+"""
+la fonction "addlikeJS" permet d'ajouter un like dans la base de donnée dans la table like
+"""
+# @login_required
+@ajax_login_required
+def addlikeJS(request, id=None):
+    #   print(request.user.is_authenticated)
+      user = request.user #récupère l'utilisateur connecté 
+    #   slug = like.chapitre.slug
+      chapitre = get_object_or_404(Chapitre, id=id) #récupérer un chapitre donné par son id que l'on veut liker
+      likeexistindb = Likechapitre.objects.filter(user = user.id, chapitre = chapitre.id) #vérifier dans la base de données si il y a au moins une ligne contenent l'user connecté et le chapitre concerné 
+      if (likeexistindb.count() == 0): #si il n'y a pas de like alors effectue la suite
+        like = Likechapitre.objects.create() #je creer un like sans aucun champs remplis
+        like.user = user # remplir le champ user du like
+        like.chapitre = chapitre # remplir le champ chapitre du like
+        like.save() #sauvegarder le like dans la base de donnée
+        return JsonResponse({'nombreLike': likeexistindb.count()}) #rediriger vers la page chapitredetail
+      else: #sinon si il y a deja un like
+        likeexistindb.delete() #alors surprime tous les likes concerné par l'user qui a liké un même chapitre
+        return JsonResponse({'nombreLike': 0 }) #rediriger vers la page chapitredetail
+
+
+
+
+
+
+
+
+
+Azertyuiop1

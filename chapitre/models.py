@@ -2,6 +2,10 @@ from email.mime import image
 from itertools import count
 from django.utils.text import slugify
 from django.db import models
+from django.db.models.signals import post_save, post_delete
+from django.dispatch import receiver
+import random
+import string
 
 from manga.models import Manga
 from useraccount.models import User
@@ -52,3 +56,38 @@ class Vuechapitre(models.Model):
 
     def __str__(self):
         return "%s %s" % ( self.user.username, self.chapitre)
+
+class ChangementComment(models.Model):  # cette table possède une seul ligne: date du dernier changement des commentaires
+    code = models.CharField(max_length=30, default='')
+    chapitre = models.OneToOneField(Chapitre, null=True, on_delete=models.CASCADE)
+
+    def __str__(self):
+        #return self.pseudo
+        return "%s" % ( self.code,)
+
+
+"""
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+"""
+@receiver([post_save, post_delete], sender=Commentairechapitre)
+def deleteOldCodeCreateNewCodeForCommentChanges(sender,instance, **kwargs):
+    changecomments = ChangementComment.objects.filter(chapitre_id=instance.chapitre.id) #récupère la liste des changements de tout les commentaires d'un seul chapitre
+    changecomments.delete() # suprime toute la liste des changements récupérer précedement
+    changecomment = ChangementComment.objects.create() #je creer une ligne sans aucun champs remplis
+    result_str = ''.join(random.choice(string.ascii_letters) for i in range(20)) #créer un code aléatoire sur 20 caractère
+    changecomment.code = result_str # remplir le champ code par le code de 20 caractère
+    changecomment.chapitre = instance.chapitre
+    changecomment.save() #sauvegarder le like dans la base de donnée
+
+
+
+"""
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+"""
+@receiver([post_save, post_delete], sender=Chapitre)
+def creatNewChangeCommentForNewchapitre(sender,instance, **kwargs):
+    changecomment = ChangementComment.objects.create() #je creer une ligne sans aucun champs remplis
+    result_str = ''.join(random.choice(string.ascii_letters) for i in range(20)) #créer un code aléatoire sur 20 caractère
+    changecomment.code = result_str # remplir le champ code par le code de 20 caractère
+    changecomment.chapitre = instance
+    changecomment.save() #sauvegarder le chapitre dans la base de donnée

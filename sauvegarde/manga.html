@@ -1,0 +1,38 @@
+{% extends 'base/base.html' %}
+
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'manga/css/manga.css' %}">
+{% endblock %}
+
+
+{% block content %}
+      <div class="row mb-2">
+            {% for manga in mangahtml %}
+
+                  <div class="col-md-6">
+                    <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-150 position-relative">
+                      <div class="col p-4 d-flex flex-column position-static">
+                        <h3 class="mb-0">{{ manga.name }}</h3>
+                        <a href="{% url 'pageprofil' manga.user.id %}"> {{ manga.user }} </a>
+                        <div class="mb-1 text-muted">Nov 11</div>
+                        <p class="mb-auto">{{ manga.description|slice:":100" }}</p>
+                        <a href="{% url 'pagedetailmanga'  manga.slug %}" target="_self" class="stretched-link">Continue reading</a>
+                      </div>
+                      <div class="col-auto d-none d-lg-block">
+                        <img class= "img-fluid max-width:100% height:auto" width="200" height="150" src="{{ manga.image.url }}" >
+                      </div>
+                    </div>
+                  </div>
+
+            {% endfor %}
+      </div>
+{% endblock %}
+
+
+
+
+
+
+
+ 
