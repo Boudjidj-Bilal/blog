@@ -188,16 +188,18 @@ def changecomments(request, chapitreid, derniercode):
         commentaires = Commentairechapitre.objects.filter(chapitre=chapitreid) #récupère tous les commentaires d'un seul chapitre spécifique
         # récuperer l'utilisateur username
         utilisateurs = User.objects.all()
-        
+
         userconnected = request.user.username
 
-        comments_list = serializers.serialize('json', commentaires)
+        userSerializes = serializers.serialize('json', utilisateurs)
+
+        commentsSerializes = serializers.serialize('json', commentaires)
         return JsonResponse(
             {
                 'changement': True,
                 'derniercode':codedb,
-                'comments': comments_list,
-                'users': utilisateurs,
+                'comments': commentsSerializes,
+                'users': userSerializes,
                 'userconnected': userconnected,
             } 
         )

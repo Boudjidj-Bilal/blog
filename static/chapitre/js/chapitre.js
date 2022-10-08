@@ -123,16 +123,26 @@ function FunctionChangeComments(event){
 
 
        commentsDeserialize = JSON.parse( reponse.comments) //récupère tout les commentaires et deserialise les
+       usersDeserialize = JSON.parse( reponse.users) //récupère tout les users et deserialise les
        var today = new Date();
        console.log(today.toString());
        console.log('il y a des changements ' + reponse);
        console.log('changement vrai: code: ' + codeRecuperer + 'initilisation: false' + ' url: ' + url , commentsDeserialize)  //  affiche le code recuperer 
+       console.log('utilisateurDeserialize: '+usersDeserialize)
        commentsDeserialize.forEach(
         comment =>{ 
             let contenaircommentairs = document.querySelector('#contenaircommentairs');
             var newDivComment = document.createElement("div");
+            let userid = comment.fields.user
+             let usernamecomment = ""
+            usersDeserialize.forEach( user => {
+                    if (user.pk === userid){
+                      usernamecomment = user.fields.username
+                    }
+            })
+            
             var newuser = document.createElement("h3");
-            newuser.innerHTML = comment.fields.user
+            newuser.innerHTML = usernamecomment
             var newbuttondelete = document.createElement("button");
             newbuttondelete.innerHTML = "delete comment"
             var newdate = document.createElement("h5");
@@ -140,7 +150,6 @@ function FunctionChangeComments(event){
             var newcomment = document.createElement("span");
             newcomment.innerHTML = comment.fields.comment
             newDivComment.appendChild(newuser);
-            newDivComment.appendChild(newbuttondelete);
             newDivComment.appendChild(newdate);
             newDivComment.appendChild(newcomment);
             contenaircommentairs.appendChild(newDivComment);
@@ -149,6 +158,13 @@ function FunctionChangeComments(event){
             // attention il y a plusieurs commentaires
             console.log(comment)
             console.log(comment.fields.comment + ' ' + comment.fields.chapitre)
+
+            newbuttondelete.addonclick = FunctionDeleteComment;
+            
+            let userconnected = reponse.userconnected;
+            if (userconnected === usernamecomment){
+                newDivComment.appendChild(newbuttondelete);
+            }
         }
        );
    
@@ -165,4 +181,4 @@ function FunctionChangeComments(event){
 
 
 
-setInterval(FunctionChangeComments ,15000);
+setInterval(FunctionChangeComments ,15000); // actualise toutes les 5 secondes la page
