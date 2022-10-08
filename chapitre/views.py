@@ -1,6 +1,6 @@
 from datetime import datetime
 from email.mime import image
-from subprocess import CREATE_NEW_CONSOLE
+# from subprocess import CREATE_NEW_CONSOLE
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
