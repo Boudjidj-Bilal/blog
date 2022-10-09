@@ -63,7 +63,7 @@ class ChangementComment(models.Model):  # cette table possède une seul ligne: d
 
     def __str__(self):
         #return self.pseudo
-        return "%s" % ( self.code,)
+        return "%s %s %s" % ( self.code,self.chapitre.name,self.chapitre.manga.name)
 
 
 """
@@ -84,10 +84,15 @@ def deleteOldCodeCreateNewCodeForCommentChanges(sender,instance, **kwargs):
 """
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 """
-@receiver([post_save, post_delete], sender=Chapitre)
+@receiver([post_save], sender=Chapitre)
 def creatNewChangeCommentForNewchapitre(sender,instance, **kwargs):
     changecomment = ChangementComment.objects.create() #je creer une ligne sans aucun champs remplis
     result_str = ''.join(random.choice(string.ascii_letters) for i in range(20)) #créer un code aléatoire sur 20 caractère
     changecomment.code = result_str # remplir le champ code par le code de 20 caractère
     changecomment.chapitre = instance
     changecomment.save() #sauvegarder le chapitre dans la base de donnée
+
+@receiver([post_delete], sender=Chapitre)
+def DeleteChangeCommentForDeletechapitre(sender,instance, **kwargs):
+    deletecode = ChangementComment.objects.filter(chapitre_id=instance.id)
+    deletecode.delete()

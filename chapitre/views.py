@@ -50,7 +50,7 @@ def addcommentaire(request, id=None):
             commentaire = form.save(commit=False) # récupère le contenus du formulaire (user,comment)
             commentaire.chapitre = Chapitre.objects.get(id=id) # ajouter le chapitre concerné par le commentaire
             commentaire.user = request.user # ajouter l'utilisateur qui a commenté
-            commentaire.date = datetime.now().strftime('%H:%M:%S') #ajouter la date du commentaire
+            commentaire.date = datetime.now().strftime("%d/%m/%Y %H:%M:%S") #ajouter la date du commentaire
             commentaire.save() #sauvegarder le commentaire dans la base de donnée
             return redirect('chapitredetail',commentaire.chapitre.slug) #rediriger vers la page chapitredetail
     else: #SINON effectue la suite:

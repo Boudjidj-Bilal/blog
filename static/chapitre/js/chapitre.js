@@ -129,15 +129,17 @@ function FunctionChangeComments(event){
        console.log('il y a des changements ' + reponse);
        console.log('changement vrai: code: ' + codeRecuperer + 'initilisation: false' + ' url: ' + url , commentsDeserialize)  //  affiche le code recuperer 
        console.log('utilisateurDeserialize: '+usersDeserialize)
-       commentsDeserialize.forEach(
+       commentsDeserialize.forEach(   // boucle parcourir les commentaires
         comment =>{ 
-            let contenaircommentairs = document.querySelector('#contenaircommentairs');
-            var newDivComment = document.createElement("div");
-            let userid = comment.fields.user
-             let usernamecomment = ""
-            usersDeserialize.forEach( user => {
-                    if (user.pk === userid){
-                      usernamecomment = user.fields.username
+            let contenaircommentairs = document.querySelector('#contenaircommentairs'); //récupère la div contenaire commentaire et affecte la a la variable contenaircommentairs
+            var newDivComment = document.createElement("div"); //créer une div
+            newDivComment.setAttribute("id","comment-"+comment.pk);
+            newDivComment.classList.add("classcomments");
+            let userid = comment.fields.user // récupère l'utilisateur id 
+             let usernamecomment = "" // récupère l'utilisateur
+            usersDeserialize.forEach( user => { //parcours tout les utilisateur
+                    if (user.pk === userid){ //
+                      usernamecomment = user.fields.username //affecte le nom de l'utilisateur au commentaire
                     }
             })
             
@@ -145,6 +147,8 @@ function FunctionChangeComments(event){
             newuser.innerHTML = usernamecomment
             var newbuttondelete = document.createElement("button");
             newbuttondelete.innerHTML = "delete comment"
+            newbuttondelete.dataset.commentid=comment.pk
+            newbuttondelete.classList.add("btnDeleteCommente");
             var newdate = document.createElement("h5");
             newdate.innerHTML = comment.fields.date
             var newcomment = document.createElement("span");
@@ -152,23 +156,24 @@ function FunctionChangeComments(event){
             newDivComment.appendChild(newuser);
             newDivComment.appendChild(newdate);
             newDivComment.appendChild(newcomment);
-            contenaircommentairs.appendChild(newDivComment);
-            // recupere balise contenaircommentairs  == 
-            // tu  luis ajoute les commenaitres grace  à innerhtml
-            // attention il y a plusieurs commentaires
-            console.log(comment)
-            console.log(comment.fields.comment + ' ' + comment.fields.chapitre)
-
-            newbuttondelete.addonclick = FunctionDeleteComment;
             
+            newbuttondelete.onclick = FunctionDeleteComment;
+          
             let userconnected = reponse.userconnected;
             if (userconnected === usernamecomment){
                 newDivComment.appendChild(newbuttondelete);
             }
-        }
-       );
-   
 
+            contenaircommentairs.appendChild(newDivComment);
+            // recupere balise contenaircommentairs  == 
+            // let contenaircommentairs = document.querySelector('#contenaircommentairs');
+            // tu  luis ajoute les commenaitres grace  à innerhtml
+            // contenaircommentairs.innerHTML = comment.fields.comment
+            // attention il y a plusieurs commentaires
+            console.log(comment)
+            console.log(comment.fields.comment + ' ' + comment.fields.chapitre)
+     }
+       ); //fin du forEACH commentsDeserialize
     }
     else {
       console.log("il n'y a pas de changements")
