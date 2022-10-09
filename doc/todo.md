@@ -15,3 +15,4 @@
 - créer un mail et demander l'email des utilisateur pour leur envoyer un mail lorsqu'ils ont oublié leur mdp
 - créer un compte aws (amazon web service) pour le stockage des images 
 - migrer le sqlite sur postgres  
+- enlever les anciens bouttons (like, addcomment... ) qui n'ont pas de javascript
