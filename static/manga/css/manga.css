@@ -15,7 +15,6 @@
     justify-content: center; /* le replacer au centre */
     background: #053552;
     position: relative;
-    min-height: calc(100vh - 54px); /*aficher le background sur la hauteur minimal du container*/
 }
 
 .container .manga{

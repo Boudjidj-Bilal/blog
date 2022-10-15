@@ -16,3 +16,6 @@
 - créer un compte aws (amazon web service) pour le stockage des images 
 - migrer le sqlite sur postgres  
 - enlever les anciens bouttons (like, addcomment... ) qui n'ont pas de javascript
+- suprimer chapitre (dans edit chapitre)
+- suprimer images
+- demander au utilisateur si ils sont sure de vouloir suprimer un manga

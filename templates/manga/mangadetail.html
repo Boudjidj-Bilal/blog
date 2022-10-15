@@ -1,29 +1,30 @@
 {% extends 'base/base.html' %}
 
+{% block css %}
+    <link rel="stylesheet" href="{% static 'manga/css/mangadetai' %}">
+{% endblock %}
+
 {% block content %}
-      <h2> {{ mangadetailhtml.name }}</h2>
-      <br>
-      <a href="{% url 'pageprofil' mangadetailhtml.user.id %}"> {{ mangadetailhtml.user }} </a> 
-      <div>
-      <img class= "img-fluid max-width:100% height:auto" width="341" height="50"  src="{{ mangadetailhtml.image.url }}" >
-      </div>
-      <br>
-      <div> {{ mangadetailhtml.description }}</div>   
-      <br>
-      <div>
-      {% for chapitre in chapitreshtml %} 
-      <h1><a href="{% url 'chapitredetail' chapitre.slug %}" target="_self">{{chapitre.name}}</a></h1>  
-
-      {% if request.user.username == mangadetailhtml.user.username %}
-      <a href="{% url 'editchapitre' chapitre.id %}" target="_self" class="bb-mangaeditchapitre">editchapitre</a>
-      {% endif %}
-
-      {{ chapitre.description }}
-         <br>
-      {% endfor %}  
-      {% if request.user.username == mangadetailhtml.user.username %}
-<a href="{% url 'addchapitres' mangadetailhtml.id %}" class="btn btn-primary btn-lg" tabindex="-1" role="button" aria-disabled="true">add chapitres</a> 
-<a href="{% url 'deletemanga' mangadetailhtml.id %}" class="btn btn-primary btn-lg" tabindex="-1" role="button" aria-disabled="true">delete manga</a> 
-{% endif %}
-      </div>
+   <div class="contenair">
+        <div class="presentation">
+             <img class= "img-fluid max-width:100% height:auto" width="341" height="50"  src="{{ mangadetailhtml.image.url }}" >             
+             <div class="ecriture">
+                    </h1> {{ mangadetailhtml.name }}</h1>
+                    <h1><a href="{% url 'pageprofil' mangadetailhtml.user.id %}"> {{ mangadetailhtml.user }} </a></h1>
+                    <p>{{ mangadetailhtml.description }}</p>
+                <div class="chapitre">
+                        {% for chapitre in chapitreshtml %} 
+                              <h2 class="editchapitre"><a href="{% url 'chapitredetail' chapitre.slug %}" target="_self">{{chapitre.name}}</a></h2>  
+                              {% if request.user.username == mangadetailhtml.user.username %}
+                              <h3><a href="{% url 'editchapitre' chapitre.id %}" target="_self" class="bb-mangaeditchapitre">editchapitre</a></h3>
+                              {% endif %}
+                </div>
+                        {% endfor %}  
+                        {% if request.user.username == mangadetailhtml.user.username %}
+                        <a href="{% url 'addchapitres' mangadetailhtml.id %}" class="btn btn-primary btn-lg" tabindex="-1" role="button" aria-disabled="true">add chapitres</a> 
+                        <a href="{% url 'deletemanga' mangadetailhtml.id %}" class="btn btn-primary btn-lg" tabindex="-1" role="button" aria-disabled="true">delete manga</a> 
+                        {% endif %}
+             </div>   
+        </div>   
+   </div>
 {% endblock %}

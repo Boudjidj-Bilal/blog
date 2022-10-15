@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;500;700;900&display=swap');
+
+/* reinitialisation à 0 */
+*, h1, h2, h3 {
+    margin: 0; /* la marge sur les quatre coté sont de 0 */
+    padding: 0; /* les écarts de remplissage sur les quatres cotés sont de 0 */
+    box-sizing: border-box; /* garder la taille de la fenêtre fixe defini par width */
+    font-family: 'Roboto', sans-serif; /* style d'écriture sans serif */
+}
+
+:root {
+    --couleurtexte:#ffffff;
+}
+.contenair{
+    background: #053552;
+}
+
+.contenair .presentation{
+    padding-top: 50px;
+    display: flex; /* les éléments à l'intérieur de container serons en mode -ms-flex-direction */
+    flex-direction: column; /* les élément s'affiche a la suite en ligne*/
+    justify-content: center; /* les éléments à l'intérieur de container place au centre */
+}
+
+img{
+    width: 330px;  /* largeur à 150 pixel */
+    border: 2px solid rgb(148, 148, 148);
+    -webkit-transition: all 1s ease; /* Safari et Chrome */
+    text-align: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+h1{
+    margin-bottom: 20px;
+}
+h2{
+    margin-bottom: 20px;
+}
+h3{
+    margin-bottom: 20px;
+}
+
+.editchapitre{
+    margin-bottom: 2px;
+}
+
+.ecriture {
+    color: var(--couleurtexte); /* couleurpour les charactère */ 
+    text-align: center;
+    margin-top: 50px;
+}
+
+.ecriture p{
+    font-size: 1.2em; /* taille du texte 1em */
+    text-align: left;
+    padding-left: 30px;
+    margin-bottom: 20px;
+}
+
+.chapitre{
+    margin-bottom: 10px;
+}
+
+.chapitre a{
+    text-decoration: none; /* cacher le souligner qui se mets automatiquement sur un liens */
+    color: var(--couleurtexte); /* couleurpour les charactère */ 
+}
+
+img:hover{
+    margin-bottom: 10px;
+    /* width: 400px;  largeur à 150 pixel */
+    /* transform: scale(1); /* agrendis de 1 l'image
+    transition: height 0.3s ease-in-out 0s, transform 0.3s ease-in-out 0s, opacity 0.3s ease-in-out 0s; animation */
+    box-shadow: 5px 5px 10px 10px rgb(0, 0, 0); /*faire de l'ombre au manga lorsque la sourit passe dessus*/
+    -webkit-transform:scale(1.25); /* Safari et Chrome */
+}
