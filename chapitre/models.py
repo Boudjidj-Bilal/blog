@@ -96,8 +96,3 @@ def creatNewChangeCommentForNewchapitre(sender,instance, **kwargs):
 def DeleteChangeCommentForDeletechapitre(sender,instance, **kwargs):
     deletecode = ChangementComment.objects.filter(chapitre_id=instance.id)
     deletecode.delete()
-
-@receiver([post_delete], sender=Chapitre)
-def Deletechapitre(sender,instance, **kwargs):
-    delete = Chapitre.objects.filter(chapitre_id=instance.id)
-    delete.delete()
