@@ -165,7 +165,11 @@ def editchapitre(request, id=None): #le id est celui du chapitre
         form = ChapitreEditForm(instance=chapitre) #envoyer le formulair vide pour être saisis par l'utilisateur
     return render(request, 'chapitre/formulaireeditchapitre.html', {'form': form}) #renvoie à la page formulaireeditchapitre
 
-
+@login_required
+def deletechapitre(request, id=None): #le id est celui du chapitre
+    chapitre = Chapitre.objects.get(id=id)
+    chapitre.delete()
+    return redirect('chapitre/formulaireeditchapitre.html',request.user.id) #rediriger vers la page profil.html d'un utilisateur
 
 
 def changecomments(request, chapitreid, derniercode):

@@ -24,6 +24,7 @@
 
 img{
     width: 330px;  /* largeur à 150 pixel */
+    height: auto;
     border: 2px solid rgb(148, 148, 148);
     -webkit-transition: all 1s ease; /* Safari et Chrome */
     text-align: center;
@@ -52,10 +53,11 @@ h3{
     margin-top: 50px;
 }
 
-.ecriture p{
+p{
     font-size: 1.2em; /* taille du texte 1em */
-    text-align: left;
+    text-align: center;
     padding-left: 30px;
+    padding-right: 30px;
     margin-bottom: 20px;
 }
 

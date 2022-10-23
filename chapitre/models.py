@@ -55,7 +55,7 @@ class Vuechapitre(models.Model):
     chapitre = models.ForeignKey(Chapitre, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
-        return "%s %s" % ( self.user.username, self.chapitre)
+        return "%s %s" % ( self.user, self.chapitre)
 
 class ChangementComment(models.Model):  # cette table possède une seul ligne: date du dernier changement des commentaires
     code = models.CharField(max_length=30, default='')
@@ -96,3 +96,8 @@ def creatNewChangeCommentForNewchapitre(sender,instance, **kwargs):
 def DeleteChangeCommentForDeletechapitre(sender,instance, **kwargs):
     deletecode = ChangementComment.objects.filter(chapitre_id=instance.id)
     deletecode.delete()
+
+@receiver([post_delete], sender=Chapitre)
+def Deletechapitre(sender,instance, **kwargs):
+    delete = Chapitre.objects.filter(chapitre_id=instance.id)
+    delete.delete()
