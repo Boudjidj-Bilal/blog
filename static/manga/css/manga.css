@@ -1,33 +1,35 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;500;700;900&display=swap');
+@import url('../../base/css/base.css');
 
-/* reinitialisation à 0 */
-*, h1, h2 {
-    margin: 0; /* la marge sur les quatre coté sont de 0 */
-    padding: 0; /* les écarts de remplissage sur les quatres cotés sont de 0 */
-    box-sizing: border-box; /* garder la taille de la fenêtre fixe defini par width */
-    font-family: 'Roboto', sans-serif; /* style d'écriture sans serif */
-}
+/* par defaut le site est formaté pour les écrant inférieur à 1040px de largeur,
+il y a la possiblité de formater pour supérieur à 1040px(voir section @media) dans le media en dessous du code */
+
 
 .container{
     display: flex; /* les éléments à l'intérieur de container serons en mode flex */
     flex-direction: row; /* les élément s'affiche a la suite en ligne*/
     flex-wrap: wrap; /* les élément revienne à la ligne */
     justify-content: center; /* le replacer au centre */
-    background: #053552;
+    /* background: var(--mybackground); */
+    background: white;
     position: relative;
-}
+    /* min-height: 87; */
+    /* min-height: var(--myheightContenair); */
+    min-height: calc(100vh - 92px)
+    }
+
+
 
 .container .manga{
     width: 150px;  /* largeur à 150 pixel */
     height: 230px; /* hauteur à 230 pixel */
-    border: 1px solid rgb(175, 175, 175); /*couleur des bordures du manga*/
+    /* border: 1px solid rgb(175, 175, 175); couleur des bordures du manga */
     margin: 13px; /* marge sur les quatre coté à 20 pixel */
     display: flex; /* les éléments à l'intérieur de manga serons en mode flex */
     flex-direction: column; /* affiche les élément flexible en colone */
     border-radius: 10px; /* coin arrondis à 10% */
     box-shadow: 5px 5px 10px 1px rgba(0, 0, 0, 0.33); /*faire de l'ombre au manga */
     position: relative; /*position relative pour permettre a ses elements enfants de se positionner relativement à lui*/
-    background: #303132; /*couleur du fon d'écrant*/
+    background: #f0f0f0; /*couleur du fon d'écrant*/
     overflow: hidden; /*cacher lorsque sa depasse*/
 } 
 
@@ -82,7 +84,7 @@
 }
 
 .container .manga .titremanga h1{
-    color: rgb(255, 255, 255); /* couleurpour les charactère */ 
+    color: rgb(51, 51, 51); /* couleurpour les charactère */ 
     font-size: 1.2em; /* taille du texte 1.2em */
 }
 
@@ -110,7 +112,7 @@
     z-index: 2; /* laisse une couche de 2%*/
     position: absolute; /* permet de décrocher l'élément de son affichage normal, les élément qui le suive prennent sa place, sa position sera définit selon top, bottom, etc. */
     flex-direction: column; /* afficher les elements en colone */
-    color: white; /* couleur de police blanche */
+    color: rgb(0, 0, 0); /* couleur de police blanche */
 }
 
 .container .manga:hover .datemanga{
@@ -132,13 +134,17 @@
      display: inline; /* affiche les élément en mode inline pour rétablir le comportement inline*/
 }
 
-/* pour l'ordinateur:  */
-@media (min-width: 1040px){
+/* lorsque la largeur de l'écran attein au minimum 1040px applique les fonctionnalités css à l'intérieur 
+de la séction media ci dessous, les attribus des sélecteurs (class,id,balise) 
+qui figure dans le media vont s'appliquer à la place des attribus en dehors du media:  */
+@media (min-width: 1040px){ 
     /* .container .manga:last-child {
         
     } */
     .container {
         justify-content: left; /* affiche les l'élément à gauche */
+        /* min-height: 89vh; */
+
     
     }
     .container .manga{
@@ -152,4 +158,4 @@
     }
 
 
-    }
+}

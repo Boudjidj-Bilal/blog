@@ -29,7 +29,8 @@
 }
 
 .navbar li a{
-    font-size: 1em; /* taille du texte 1em */
+    font-size: 20px; /* taille du texte 1em */
+    padding: 10% 0;
 }
 
 .navbar a{
@@ -73,7 +74,7 @@
         right: 0px; /* l'image laisse 0px d'espace à droite */
         bottom: 0; /* l'image laisse 0px d'espace en bas */
         position: absolute; /* permet de décrocher l'élément de son affichage normal, les élément qui le suive prennent sa place, sa position sera définit selon top, bottom, etc. */
-        height: 300px;
+        height: 83vh;
         width: 100%;
         border: 2px solid black;
         justify-content: center;

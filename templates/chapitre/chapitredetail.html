@@ -15,14 +15,14 @@
                      {% endfor %}
             </div>
             
-            <a href="{% url 'addcomments'  chapitrehtml.id %}" class="btn btn-primary btn-lg" tabindex="-1" role="button" aria-disabled="true">add comments</a> {{ commentshtml|length }} 
+            <a href="{% url 'chapitre:addcomments'  chapitrehtml.id %}" class="btn btn-primary btn-lg" tabindex="-1" role="button" aria-disabled="true">add comments</a> {{ commentshtml|length }} 
             
-            <a href="{% url 'addlike' chapitrehtml.id %}" class="btn btn-primary btn-lg" tabindex="-1" role="button" aria-disabled="true">add like</a> {{ likehtml|length }} 
+            <a href="{% url 'chapitre:addlike' chapitrehtml.id %}" class="btn btn-primary btn-lg" tabindex="-1" role="button" aria-disabled="true">add like</a> {{ likehtml|length }} 
 
             <button {% if not request.user.username %} disabled {% endif %} id="like" class="btn btn-primary btn-lg" role="button" aria-disabled="true">add like JS</button> <span id='nombreDeLike' data-chapitreid='{{chapitrehtml.id}}'>{{ likehtml|length }} </span> 
                
                {% if request.user.username == chapitrehtml.manga.user.username %}
-                  <a href="{% url 'addimage' chapitrehtml.id %}" class="btn btn-primary btn-lg" tabindex="-1" role="button" aria-disabled="true">add image</a>
+                  <a href="{% url 'chapitre:addimage' chapitrehtml.id %}" class="btn btn-primary btn-lg" tabindex="-1" role="button" aria-disabled="true">add image</a>
                {% endif %}
 
             <div id="contenaircommentairs">

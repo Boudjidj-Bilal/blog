@@ -1,18 +1,17 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;500;700;900&display=swap');
+@import url('../../base/css/base.css');
 
-/* reinitialisation à 0 */
-*, h1, h2, h3 {
-    margin: 0; /* la marge sur les quatre coté sont de 0 */
-    padding: 0; /* les écarts de remplissage sur les quatres cotés sont de 0 */
-    box-sizing: border-box; /* garder la taille de la fenêtre fixe defini par width */
-    font-family: 'Roboto', sans-serif; /* style d'écriture sans serif */
-}
+/* :root{
+    --mybackground: #25baff;
+    --mycouleurtexte:#ffffff;
+    --myheightMenu: 54px;
+    --myheightFooter: 38px;
+    --myheightContenair: calc(100vh-(var(--heightMenu)+var(--heightFooter)));
+} */
 
-:root {
-    --couleurtexte:#ffffff;
-}
+
 .contenair{
-    background: #053552;
+    background: var(--mybackground);
+    min-height: var(--heightContenair)
 }
 
 .contenair .presentation{
@@ -25,7 +24,7 @@
 img{
     width: 330px;  /* largeur à 150 pixel */
     height: auto;
-    border: 2px solid rgb(148, 148, 148);
+    /* border: 2px solid rgb(148, 148, 148); */
     -webkit-transition: all 1s ease; /* Safari et Chrome */
     text-align: center;
     display: block;
@@ -48,7 +47,7 @@ h3{
 }
 
 .ecriture {
-    color: var(--couleurtexte); /* couleurpour les charactère */ 
+    color: var(--mycouleurtexte); /* couleurpour les charactère */ 
     text-align: center;
     margin-top: 50px;
 }

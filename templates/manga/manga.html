@@ -11,7 +11,7 @@
       
           <div class="container">
               {% for manga in mangalistehtml %}
-                  <a href="{% url 'pagedetailmanga' manga.slug %}">  
+                  <a href="{% url 'manga:pagedetailmanga' manga.slug %}">  
                       <div class="manga">
                               <!-- <div class="triangle"></div> -->
                               <img src="{{ manga.image.url }}" alt="">

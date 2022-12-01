@@ -1,15 +1,17 @@
 {% load static %}
-   
+
+<link rel="stylesheet" href="{% static 'base/css/navigation.css' %}">
+
 
 <nav class="navbar">
       <a href="">MW</a>
       <ul class="mobile inactif"  id="menu">
-            <li><a class="elementmenu" href="{% url 'pagemanga' %}">home</a></li>
+            <li><a class="elementmenu" href="{% url 'manga:pagemanga' %}">home</a></li>
             <li><a class="elementmenu" href="{% url 'account_login' %}">login</a></li>
             <li><a class="elementmenu" href="{% url 'account_logout' %}">logout</a></li>
             {% if request.user.username %}
               <li>
-                <a class="elementmenu" href="{% url 'pageprofil' request.user.id %}" target="_self">{{ request.user.username }}
+                <a class="elementmenu" href="{% url 'profil:pageprofil' request.user.id %}" target="_self">{{ request.user.username }}
                 </a>
               </li>
             {% endif %}

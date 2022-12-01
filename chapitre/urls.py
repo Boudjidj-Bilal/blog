@@ -1,6 +1,9 @@
 from django.urls import path 
 from chapitre import views
 
+app_name = "chapitre"
+
+
 
 urlpatterns = [
 
@@ -13,5 +16,6 @@ urlpatterns = [
     path('chap/addimage/<int:id>/',views.addimagechapitre,name='addimage'),  #id correpond à l'id de chapitre
     path('chap/edit/<int:id>/',views.editchapitre,name='editchapitre'), #id correspond à l'id de chapitre
     path('chap/changecomments/<int:chapitreid>/<derniercode>/',views.changecomments,name='changecomments'), #id correspond à l'id de chapitre
+    path('chap/delete/<int:id>/',views.deletechapitre,name='deletechapitre'), #id correspond à celui du chapitre
     path('chap/<slug:slug>/',views.chapitredetail,name='chapitredetail'),
 ]

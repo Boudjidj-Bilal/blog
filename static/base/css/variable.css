@@ -1,0 +1,8 @@
+:root{
+        --myheightmenu: ;
+        --mybackground: #ffffff;
+        --couleurtexte:#181818;
+        --heightMenu: 54px;
+        --heightFooter: 38px;
+        --heightContenair: calc(100vh-(var(--heightMenu)+var(--heightFooter)));
+}

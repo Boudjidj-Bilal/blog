@@ -10,6 +10,7 @@ from django.core import serializers
 from chapitre.forms import ChapitreEditForm, ChapitreForm, CommentairechapitreForm, ImageschapitreForm
 from chapitre.models import ChangementComment, Chapitre, Commentairechapitre, Imageschapitre, Likechapitre, Vuechapitre
 from manga.models import Manga
+from manga.views import mangadetail
 from useraccount.models import User
 
 
@@ -134,7 +135,7 @@ def addchapitre(request, id=None): # le id représente le id de manga
             #manga.user = request.user # ajouter l'utilisateur qui a commenté
             #manga.date = datetime.now().strftime('%H:%M:%S') #ajouter la date du manga
             chapitre.save() #sauvegarder le chapitre dans la base de donnée
-            return redirect('pagedetailmanga',chapitre.manga.slug) #rediriger vers la page chapitre d'un utilisateur
+            return redirect('manga:pagedetailmanga',chapitre.manga.slug) #rediriger vers la page chapitre d'un utilisateur
     else: #SINON effectue la suite:
         form = ChapitreForm() #envoyer le formulair vide pour être saisis par l'utilisateur
     return render(request, 'chapitre/formulaireaddchapitre.html', {'form': form}) #renvoie à la page formulaireaddmanga
@@ -160,12 +161,18 @@ def editchapitre(request, id=None): #le id est celui du chapitre
         if form.is_valid(): #vérifier si tout les champs remplis par l'utilisateur son valide
             chapitrenew = form.save(commit=False) # récupère le contenus du formulaire (name,description)
             chapitrenew.save() #sauvegarder le chapitre dans la base de donnée
-            return redirect('pagedetailmanga', chapitrenew.manga.slug) #rediriger vers la page detailmanga d'un utilisateur
+            return redirect('manga:pagedetailmanga', chapitrenew.manga.slug) #rediriger vers la page detailmanga d'un utilisateur
     else: #SINON effectue la suite:
         form = ChapitreEditForm(instance=chapitre) #envoyer le formulair vide pour être saisis par l'utilisateur
     return render(request, 'chapitre/formulaireeditchapitre.html', {'form': form}) #renvoie à la page formulaireeditchapitre
 
+@login_required
+def deletechapitre(request, id=None): #le id est celui du chapitre
+    chapitre = Chapitre.objects.get(id=id)
+    chapitre.delete()
+    return redirect('manga:pagedetailmanga', chapitre.manga.slug ) #rediriger vers la page manga du chapitre suprimer
 
+ 
 def changecomments(request, chapitreid, derniercode):
     codedb = ''
     try:

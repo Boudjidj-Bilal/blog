@@ -1,19 +1,10 @@
-.bb-ms-1 {
-    margin-left: 5px;
-}
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;500;700;900&display=swap');
+@import url('variable.css');
 
-.bb-ms-2 {
-    margin-left: 10px;
-}
-
-.bb-ms-3 {
-    margin-left: 15px;
-}
-
-.bb-ms-4 {
-    margin-left: 20px;
-}
-
-.bb-ms-5 {
-    margin-left: 25px;
+/* reinitialisation à 0 */
+*, h1, h2 {
+    margin: 0; /* la marge sur les quatre coté sont de 0 */
+    padding: 0; /* les écarts de remplissage sur les quatres cotés sont de 0 */
+    box-sizing: border-box; /* garder la taille de la fenêtre fixe defini par width */
+    font-family: 'Roboto', sans-serif; /* style d'écriture sans serif */
 }

@@ -56,10 +56,3 @@ def deletemanga(request, id=None): #le id est celui du manga
     manga = Manga.objects.get(id=id)
     manga.delete()
     return redirect('pageprofil',request.user.id) #rediriger vers la page profil.html d'un utilisateur
-
-
-@login_required
-def deletechapitre(request, id=None): #le id est celui du chapitre
-    chapitre = Chapitre.objects.get(id=id)
-    chapitre.delete()
-    return redirect('chapitre/formulaireeditchapitre.html',request.user.id) #rediriger vers la page profil.html d'un utilisateur

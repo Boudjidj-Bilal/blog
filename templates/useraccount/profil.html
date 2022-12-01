@@ -16,9 +16,9 @@
             <h3 class="mb-0">{{ manga.name }}</h3>
             <div class="mb-1 text-muted">Nov 11</div>
             <p class="mb-auto">{{ manga.description|slice:":100" }}</p>
-            <a href="{% url 'pagedetailmanga'  manga.slug %}" target="_self" class="stretched-link">Continue reading</a>
+            <a href="{% url 'manga:pagedetailmanga'  manga.slug %}" target="_self" class="stretched-link">Continue reading</a>
             {% if request.user.username == manga.user.username %}
-            <a href="{% url 'editmanga'  manga.id %}" target="_self" class="bb-profileditmanga">editmanga</a>
+            <a href="{% url 'manga:editmanga'  manga.id %}" target="_self" class="bb-profileditmanga">editmanga</a>
             {% endif %}
           </div>
 
@@ -30,7 +30,7 @@
 
 {% endfor %} 
 {% if request.user.username %}
-<a href="{% url 'addmanga' %}" class="btn btn-primary btn-lg" tabindex="-1" role="button" aria-disabled="true">add mangas</a> 
+<a href="{% url 'manga:addmanga' %}" class="btn btn-primary btn-lg" tabindex="-1" role="button" aria-disabled="true">add mangas</a> 
 {% endif %}
   </div>
 {% endblock %}
