@@ -1,18 +1,26 @@
 {% extends 'base/base.html' %}
 {% load static %}
 
+{% block css %}
+    <link rel="stylesheet" href="{% static 'chapitre/css/chapitre.css' %}">
+{% endblock %}
+
+
 {% block content %}
 
       <div class="contenair">
             <div class="row">
                      <h1 id="changecomment" data-derniercode='{{codehtml}}' data-chapitreid='{{chapitrehtml.id}}'>{{chapitrehtml.name}} nombre de vues: {{ vueshtml|length }}</h1> 
-                     
-                     {{chapitrehtml.description}}
-                     {% for image in imageshtml %}
-                        <div class="col-12">
-                           <img class= "img-fluid max-width:auto height:100%" src="{{ image.imagename.url }}" >
+                     <div class="images">
+                        <div class="description">
+                           {{chapitrehtml.description}}
                         </div>
-                     {% endfor %}
+                        {% for image in imageshtml %}
+                           <div class="image">
+                              <img src="{{ image.imagename.url }}" >
+                           </div>
+                        {% endfor %}
+                     </div>
             </div>
             
             <a href="{% url 'chapitre:addcomments'  chapitrehtml.id %}" class="btn btn-primary btn-lg" tabindex="-1" role="button" aria-disabled="true">add comments</a> {{ commentshtml|length }} 

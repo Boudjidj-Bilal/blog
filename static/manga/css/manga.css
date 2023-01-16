@@ -10,7 +10,7 @@ il y a la possiblité de formater pour supérieur à 1040px(voir section @media)
     flex-wrap: wrap; /* les élément revienne à la ligne */
     justify-content: center; /* le replacer au centre */
     /* background: var(--mybackground); */
-    background: white;
+    background: rgb(255, 255, 255);
     position: relative;
     /* min-height: 87; */
     /* min-height: var(--myheightContenair); */
@@ -29,7 +29,7 @@ il y a la possiblité de formater pour supérieur à 1040px(voir section @media)
     border-radius: 10px; /* coin arrondis à 10% */
     box-shadow: 5px 5px 10px 1px rgba(0, 0, 0, 0.33); /*faire de l'ombre au manga */
     position: relative; /*position relative pour permettre a ses elements enfants de se positionner relativement à lui*/
-    background: #f0f0f0; /*couleur du fon d'écrant*/
+    background: #ffffff; /*couleur du fon d'écrant*/
     overflow: hidden; /*cacher lorsque sa depasse*/
 } 
 

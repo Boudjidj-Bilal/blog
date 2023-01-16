@@ -1,0 +1,64 @@
+:root{
+    --ColorWhite: #ffffff;
+}
+
+.contenair{
+    background-color: #000133;
+}
+
+img{
+    height: 100%;
+    width: auto;
+}
+
+h1{
+    color: var(--ColorWhite);   
+}
+
+.description{
+    color: var(--ColorWhite);   
+}
+
+a{
+    color: var(--ColorWhite);
+}
+
+p{
+    color: var(--ColorWhite);   
+}
+
+span{
+    color: var(--ColorWhite);   
+
+}
+
+.images{
+    width: 100vw;
+}
+
+.image{
+    display: flex;
+    justify-content: center;
+    height: 110vh;
+    margin-top: 40px;
+}
+
+
+/* lorsque la largeur de l'écran attein au maximum 1040px applique les fonctionnalités css à l'intérieur 
+de la séction media ci dessous, les attribus des sélecteurs (class,id,balise) 
+qui figure dans le media vont s'appliquer à la place des attribus en dehors du media:  */
+@media (max-width: 1040px){ 
+    .image{
+        display: flex;
+        justify-content: center;
+        margin: 10px;
+        margin-bottom: 30px;
+        height: auto;
+    }
+
+    img{
+        width: 100%;
+    }
+
+
+}

@@ -3,8 +3,6 @@ from chapitre import views
 
 app_name = "chapitre"
 
-
-
 urlpatterns = [
 
     path('chap/addcomment/<int:id>/',views.addcommentaire,name='addcomments'), #id correpond à l'id du chapitre

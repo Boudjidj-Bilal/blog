@@ -1,0 +1,36 @@
+:root{
+    --myheightmenu: ;
+    --mybackground: #ffffff;
+    --couleurtexte:#181818;
+    --heightMenu: 54px;
+    --heightFooter: 38px;
+    --heightContenair: calc(100vh-(var(--heightMenu)+var(--heightFooter)));
+    --myHeigthContenair: 50vh;
+}
+
+h1{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 30px;
+}
+
+p{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+}
+
+body{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    background-color: #0041a3;
+    vertical-align: middle;
+}
+.contenair{
+    background-color: rgb(255, 255, 255);
+    /* border: solid 2px gray; */
+    border-radius: 20px;
+    height: var(--myHeigthContenair);
+    padding: 20px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}

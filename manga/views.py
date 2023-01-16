@@ -33,7 +33,7 @@ def addmanga(request):
             manga.user = request.user # ajouter l'utilisateur qui a commenté
             #manga.date = datetime.now().strftime('%H:%M:%S') #ajouter la date du manga
             manga.save() #sauvegarder le manga dans la base de donnée
-            return redirect('pageprofil',request.user.id) #rediriger vers la page profil.html d'un utilisateur
+            return redirect('profil:pageprofil',request.user.id) #rediriger vers la page profil.html d'un utilisateur
     else: #SINON effectue la suite:
         form = MangaForm() #envoyer le formulair vide pour être saisis par l'utilisateur
     return render(request, 'manga/formulaireaddmanga.html', {'form': form}) #renvoie à la page formulaireaddmanga
@@ -46,7 +46,7 @@ def editmanga(request, id=None): #le id est celui du manga
         if form.is_valid(): #vérifier si tout les champs remplis par l'utilisateur son valide
             manganew = form.save(commit=False) # récupère le contenus du formulaire (pseudo,comment)
             manganew.save() #sauvegarder le manga dans la base de donnée
-            return redirect('pageprofil',request.user.id) #rediriger vers la page profil.html d'un utilisateur
+            return redirect('profil:pageprofil',request.user.id) #rediriger vers la page profil.html d'un utilisateur
     else: #SINON effectue la suite:
         form = MangaEditForm(instance=manga) #envoyer le formulair vide pour être saisis par l'utilisateur
     return render(request, 'manga/formulaireaddmanga.html', {'form': form}) #renvoie à la page formulaireaddmanga
@@ -55,4 +55,4 @@ def editmanga(request, id=None): #le id est celui du manga
 def deletemanga(request, id=None): #le id est celui du manga
     manga = Manga.objects.get(id=id)
     manga.delete()
-    return redirect('pageprofil',request.user.id) #rediriger vers la page profil.html d'un utilisateur
+    return redirect('profil:pageprofil',request.user.id) #rediriger vers la page profil.html d'un utilisateur
