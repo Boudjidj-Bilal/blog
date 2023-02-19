@@ -1,4 +1,4 @@
-# My Django website!
+# Welcome to my  simple website!
 
 This is my website designed with **Django** and **Python**,
 
@@ -11,5 +11,4 @@ Others language programs used in this website
 - Javascript
 - database
 
-## Schémas uml:
 ![](doc/uml.png)
