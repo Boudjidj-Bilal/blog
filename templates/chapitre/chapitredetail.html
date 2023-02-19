@@ -10,17 +10,18 @@
 
       <div class="contenair">
             <div class="row">
-                     <h1 id="changecomment" data-derniercode='{{codehtml}}' data-chapitreid='{{chapitrehtml.id}}'>{{chapitrehtml.name}} nombre de vues: {{ vueshtml|length }}</h1> 
-                     <div class="images">
-                        <div class="description">
-                           {{chapitrehtml.description}}
-                        </div>
-                        {% for image in imageshtml %}
-                           <div class="image">
-                              <img src="{{ image.imagename.url }}" >
-                           </div>
-                        {% endfor %}
-                     </div>
+                  </h1> {{ mangadetailhtml.name }}</h1>
+                  <h1 id="changecomment" data-derniercode='{{codehtml}}' data-chapitreid='{{chapitrehtml.id}}'>{{chapitrehtml.name}} nombre de vues: {{ vueshtml|length }}</h1> 
+                  <div class="description">
+                     {{chapitrehtml.description}}
+                  </div>
+                  <div class="images">
+                     {% for image in imageshtml %}
+                        <div class="image">
+                           <img src="{{ image.imagename.url }}" >
+                         </div>
+                     {% endfor %}
+                  </div>
             </div>
             
             <a href="{% url 'chapitre:addcomments'  chapitrehtml.id %}" class="btn btn-primary btn-lg" tabindex="-1" role="button" aria-disabled="true">add comments</a> {{ commentshtml|length }} 

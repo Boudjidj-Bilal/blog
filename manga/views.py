@@ -20,9 +20,9 @@ la fonction "mangadetail" permet d'afficher le manga données avec les chapitres
 """
 def mangadetail(request, slug=None):
     manga = get_object_or_404(Manga, slug=slug)  #recupère le manga specifique defini dans slug
-    chapitre = Chapitre.objects.filter(manga=manga.id) #recupere les chapitres du manga specifique defini par son id
+    chapitres = Chapitre.objects.filter(manga=manga.id) #recupere les chapitres du manga specifique defini par son id
 
-    return render(request, 'manga/mangadetail.html', {'chapitreshtml': chapitre,'mangadetailhtml': manga}) #crée la page contenat le manga spécifique avec tous ces chapitres 
+    return render(request, 'manga/mangadetail.html', {'chapitreshtml': chapitres,'mangadetailhtml': manga}) #crée la page contenat le manga spécifique avec tous ces chapitres 
 
 @login_required
 def addmanga(request):

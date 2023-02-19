@@ -148,7 +148,7 @@ def addimagechapitre(request, id=None):
             imagename = form.save(commit=False) # récupère le contenus du formulaire (user,comment)
             imagename.chapitre = Chapitre.objects.get(id=id) # ajouter l'image concerné par le chapitre
             imagename.save() #sauvegarder l'image dans la base de donnée
-            return redirect('chapitredetail',imagename.chapitre.slug) #rediriger vers la page chapitre d'un utilisateur
+            return redirect('chapitre:chapitredetail',imagename.chapitre.slug) #rediriger vers la page chapitre d'un utilisateur
     else: #SINON effectue la suite:
         form = ImageschapitreForm() #envoyer le formulair vide pour être saisis par l'utilisateur
         return render(request, 'chapitre/formulaireaddimage.html', {'form': form}) #renvoie à la page formulaireadd

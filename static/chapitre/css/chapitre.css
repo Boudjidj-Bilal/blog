@@ -16,7 +16,11 @@ h1{
 }
 
 .description{
-    color: var(--ColorWhite);   
+    color: var(--ColorWhite);  
+    padding-right: 200px; 
+    padding-left: 200px; 
+    padding-top: 20px;
+    font-size: 20px;
 }
 
 a{
@@ -58,6 +62,15 @@ qui figure dans le media vont s'appliquer à la place des attribus en dehors du 
 
     img{
         width: 100%;
+    }
+
+    .description{
+        width: auto;
+        color: var(--ColorWhite);  
+        padding-right: 20px; 
+        padding-left: 20px; 
+        padding-top: 2px;
+    
     }
 
 
