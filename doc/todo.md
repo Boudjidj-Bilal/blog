@@ -20,3 +20,4 @@
 - faire un footer avec nom prenom mail (voir le site de l'école)
 - Dans le fichier base.css mettre a l'interieur l'initialisation des h1 h2 h3 et importer le fichier base.css dans tout les css
 - importer le fichier variable.css dans le fichier base.css 
+
