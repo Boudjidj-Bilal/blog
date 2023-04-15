@@ -1,5 +1,5 @@
 let humberger = document.querySelector('#humberger'); //récupère la balise qui contient le id humberger et affecte le a la variable humberger
-let taillemobile = 600;  // récupère la taille de l'écrant du mobile et affecte le a la variable taillemobile
+let taillemobile = 600;  // récupère la taille de l'écrant (largeur) du mobile et affecte le a la variable taillemobile
 
 
 humberger.addEventListener("click", myFunction); // créer un éléments click sur la variable humberger et lorsque qu'il click execute myfonction

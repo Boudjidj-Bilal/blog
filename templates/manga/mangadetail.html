@@ -8,7 +8,17 @@
 
 {% block content %}
    <div class="contenair">
-        <div class="presentation">
+            <div class="confirmeDelete" id="confirmeDeleteId">
+                  <div class="confirm">
+                        <h1 >Voulez vous vraiment suprimer le manga?</h1>
+                        </br>
+                        <a  class="lienButton" href="{% url 'manga:pageConfirmeDeleteManga' mangadetailhtml.id %}"><button class="buttonCustom dangerAction">oui</button></a>
+
+                        <button class="buttonCustom primaryAction" type="submit" onclick="annuleDelete()">non</button>
+
+                  </div>
+            </div>
+          <div class="presentation">
              <img class= "img-fluid max-width:100% height:auto"  src="{{ mangadetailhtml.image.url }}" >             
              <div class="ecriture">
                     </h1> {{ mangadetailhtml.name }}</h1>
@@ -25,9 +35,15 @@
                 </div>  
                         {% if request.user.username == mangadetailhtml.user.username %}
                         <a href="{% url 'chapitre:addchapitres' mangadetailhtml.id %}" class="btn btn-primary btn-lg" tabindex="-1" role="button" aria-disabled="true">add chapitres</a> 
-                        <a href="{% url 'manga:deletemanga' mangadetailhtml.id %}" class="btn btn-primary btn-lg" tabindex="-1" role="button" aria-disabled="true">delete manga</a> 
+                        <button class="buttonCustom primaryAction" type="submit" onclick="demandeDelete()">suprimer</button>
+                        
+                        {% comment %} <a href="{% url 'manga:deletemanga' mangadetailhtml.id %}" class="btn btn-primary btn-lg" tabindex="-1" role="button" aria-disabled="true">delete manga</a>  {% endcomment %}
                         {% endif %}
              </div>   
-        </div>   
+          </div>   
    </div>
+{% endblock %}
+
+{% block js %}
+   <script src="{% static 'manga/js/manga.js' %}"></script>
 {% endblock %}

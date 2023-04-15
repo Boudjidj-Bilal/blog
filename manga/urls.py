@@ -12,4 +12,5 @@ urlpatterns = [
     path('manga/edit/<int:id>/',views.editmanga,name='editmanga'),
     path('manga/delete/<int:id>/',views.deletemanga,name='deletemanga'),
     path('manga/<slug:slug>/',views.mangadetail,name='pagedetailmanga'),
+    path('manga/delete/<int:id>/',views.confirmeDeleteManga,name='pageConfirmeDeleteManga'),
 ]

@@ -56,3 +56,6 @@ def deletemanga(request, id=None): #le id est celui du manga
     manga = Manga.objects.get(id=id)
     manga.delete()
     return redirect('profil:pageprofil',request.user.id) #rediriger vers la page profil.html d'un utilisateur
+
+def confirmeDeleteManga():
+    return redirect('manga:pageConfirmeDeleteManga',)

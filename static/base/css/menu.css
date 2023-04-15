@@ -71,13 +71,18 @@
 }
 
 @media (max-width: 600px){
+    .humberger{
+        z-index: 10;
+        position: fixed;
+        right: 10px;
+    }
     .mobile{
-        top: 45px; /* l'image laisse 0px d'espace en haut */
+        top: 0px; /* l'image laisse 0px d'espace en haut */
         left: 0px; /* l'image laisse 0px d'espace à gauche */
         right: 0px; /* l'image laisse 0px d'espace à droite */
         bottom: 0; /* l'image laisse 0px d'espace en bas */
-        position: absolute; /* permet de décrocher l'élément de son affichage normal, les élément qui le suive prennent sa place, sa position sera définit selon top, bottom, etc. */
-        height: 83vh;
+        position: fixed; /* permet de décrocher l'élément de son affichage normal, les élément qui le suive prennent sa place, sa position sera définit selon top, bottom, etc. */
+        height: 100vh;
         width: 100%;
         /* border: 2px solid black; */
         justify-content: center;
