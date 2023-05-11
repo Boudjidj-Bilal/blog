@@ -1,0 +1,20 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static '...' %}">
+{% endblock %}
+
+{% block content %}
+   <div class="contenair">
+      <h1> Page : renduImage </h1>
+      {% comment %} {% image = $_POST["image"] %} {% endcomment %}
+      {% comment %} {% print_r($_POST) %} {% endcomment %}
+      {% comment %} {{ print(request.POST["image"]) }} {% endcomment %}
+   </div>
+{% endblock %}
+
+{% block js %}
+   <script src="{% static '...' %}"></script>
+{% endblock %}

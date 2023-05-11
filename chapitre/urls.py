@@ -15,5 +15,6 @@ urlpatterns = [
     path('chap/edit/<int:id>/',views.editchapitre,name='editchapitre'), #id correspond à l'id de chapitre
     path('chap/changecomments/<int:chapitreid>/<derniercode>/',views.changecomments,name='changecomments'), #id correspond à l'id de chapitre
     path('chap/delete/<int:id>/',views.deletechapitre,name='deletechapitre'), #id correspond à celui du chapitre
-    path('chap/<slug:slug>/',views.chapitredetail,name='chapitredetail'),
+    path('chap/updateImagesOrder/',views.saveOrder,name='saveOrder'),
+    path('chap/<slug:slug>/',views.chapitredetail,name='chapitredetail'), # Il faut laisser cette url en dernier sinon les urls d'après ne fonctionnerons pas
 ]

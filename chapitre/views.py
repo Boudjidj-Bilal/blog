@@ -58,6 +58,8 @@ def addcommentaire(request, id=None):
         form = CommentairechapitreForm() #envoyer le formulair vide pour être saisis par l'utilisateur
     return render(request, 'chapitre/commentaire.html', {'form': form}) #renvoie à la page commentaire
 
+
+
 """ 
 la fonction "chapitredetail" permet d'afficher le contenus (détailler) du chapitre
 """
@@ -65,7 +67,7 @@ def chapitredetail(request, slug=None):
     chapitre = get_object_or_404(Chapitre, slug=slug) #récupère un chapitre donné par son slug
     comments = Commentairechapitre.objects.filter (chapitre_id = chapitre.id) #récupère tous les commentaires appartenant a un chapitre donné par son id
     likes = Likechapitre.objects.filter (chapitre_id = chapitre.id) #récupère tous les likes appartenant a un chapitre donné par son id 
-    images = Imageschapitre.objects.filter (chapitre_id = chapitre.id) #récupère toutes les images appartenant a un chapitre donné par son id
+    images = Imageschapitre.objects.filter (chapitre_id = chapitre.id).order_by('order') #récupère toutes les images appartenant a un chapitre donné par son id et trie les avec le champs order
     userconnected = request.user.username #récupère l'utilisateur connecté
     if (userconnected):
         vueuserchap = Vuechapitre.objects.filter (user=userconnected, chapitre_id=chapitre) #récupère la vue qui correspond a un utilisateur données et un chapitre
@@ -147,6 +149,11 @@ def addimagechapitre(request, id=None):
         if form.is_valid(): #vérifier si tout les champs remplis par l'utilisateur son valide
             imagename = form.save(commit=False) # récupère le contenus du formulaire (user,comment)
             imagename.chapitre = Chapitre.objects.get(id=id) # ajouter l'image concerné par le chapitre
+            dernierOrder = Imageschapitre.objects.filter(chapitre_id=id).order_by('order').last() # recupère dans la table imageschapitre les images du chapitre dans l'ordre du champs order, parmis celle ci prend l'image qui à le plus grand order(.last), et récupère son order(.order)
+            if dernierOrder is None:
+                imagename.order = 1
+            else:
+                imagename.order = dernierOrder.order+1
             imagename.save() #sauvegarder l'image dans la base de donnée
             return redirect('chapitre:chapitredetail',imagename.chapitre.slug) #rediriger vers la page chapitre d'un utilisateur
     else: #SINON effectue la suite:
@@ -208,3 +215,40 @@ def changecomments(request, chapitreid, derniercode):
                 'userconnected': userconnected,
             } 
         )
+
+
+
+
+# Dans cette vue, nous vérifions que la requête est de type POST pour éviter les erreurs.
+# Nous récupérons ensuite la liste des identifiants d'instances de VotreModele permutées dans le bon ordre
+# à partir des données POST. Nous parcourons ensuite cette liste en mettant à jour le champ order de chaque instance
+# en fonction de sa position dans la liste permutée. Enfin, nous renvoyons une réponse JSON pour indiquer
+# que la mise à jours'est bien passée:
+# ici on recupère les images ordonnées de la fonction save_order dans le fichier chapitre.js
+@login_required
+def saveOrder(request):
+    if request.method == 'POST': # vérifie si la requête est de type post
+        image_list_order = request.POST.getlist('order[]')
+        chapitreId = request.POST['chapitreId']
+        imagelist = Imageschapitre.objects.filter(chapitre_id=int(chapitreId)) #récupère tous la liste des 
+        for imgDb in imagelist:  #supression
+            imageIdExist = False
+            for _, image_id in enumerate(image_list_order): # cette boucle permet d'ordonnée les objets, 
+                if(int(image_id) == imgDb.id):
+                    imageIdExist = True
+            if (imageIdExist == False):
+                imageDelete = Imageschapitre.objects.get(id=imgDb.id)
+                imageDelete.delete()
+
+                
+
+        for i, image_id in enumerate(image_list_order): # cette boucle permet d'ordonnée les objets, 
+            image = Imageschapitre.objects.get(id=int(image_id))
+            image.order = i+1
+            image.save()
+        return JsonResponse({'success': True}) # renvoie la réponse success a la fonction save_order du fichier chapitre.js
+    else:
+        return JsonResponse({'success': False}) # renvoie la réponse error a la fonction save_order du fichier chapitre.js
+
+
+

@@ -183,7 +183,122 @@ function FunctionChangeComments(event){
   });
 }
 
-
-
-
 setInterval(FunctionChangeComments ,15000); // actualise toutes les 5 secondes la page
+
+
+
+
+// function AfficherUpdate() {
+//   document.getElementById("AfficherID").style.display = "block"; //lorsqu'on click sur le boutton qui contient
+// }
+  
+// function CacherUpdate() {
+//   document.getElementById("AfficherID").style.display = "none";
+// }
+
+
+let afficherUpdate = document.querySelectorAll(".updateDelete");
+
+let nbDivAfficher = afficherUpdate.length;
+
+function AfficherUpdate() 
+{
+  for(var i=0; i<nbDivAfficher; i++)
+  {
+    afficherUpdate[i].style.display = "block"; 
+  }
+}
+  
+function CacherUpdate() 
+{
+  for(var i=0; i<nbDivAfficher; i++)
+  {
+    afficherUpdate[i].style.display = "none"; 
+  }
+}
+
+// var annuler = document.getElementsByClassName("btnAnnuler"); // récupère le bouton Annuler grace à sa classe dans la variable annuler
+var annuler = document.getElementById("annuler"); // récupère le bouton Annuler grace à sa classe dans la variable annuler
+
+// permuter une image pour le boutton en-haut
+// gestion du boutton pour remonter l'image vers le haut
+var enHautBtns = document.getElementsByClassName("enHaut");
+
+for (var i = 0; i < enHautBtns.length; i++) //à chaque boutton
+{  
+  enHautBtns[i].addEventListener("click", function() { // ajoute un événement clique
+        var divPrincipalImage = this.parentNode.parentNode.parentNode; // récupère toute la div de l'image avec les boutton en remontant deux fois au parent pour aller a la div-contenair
+        var precedentDivPrincipalImage = divPrincipalImage.previousElementSibling; //
+        if (precedentDivPrincipalImage) 
+        {
+            divPrincipalImage.parentNode.insertBefore(divPrincipalImage, precedentDivPrincipalImage);
+            annuler.style.display = "block"; 
+            // update_order();
+        }
+    });
+}
+
+// gestion du boutton pour redescendre l'image vers le bas
+var enBasBtns = document.getElementsByClassName("enBas");
+
+for (var i = 0; i < enBasBtns.length; i++) //à chaque boutton 
+{ 
+  enBasBtns[i].addEventListener("click", function() { // ajoute un événement clique
+        var divPrincipalImage = this.parentNode.parentNode.parentNode; // récupère toute la div de l'image avec les boutton en remontant deux fois au parent pour aller a la div-contenair
+        var suivantDivPrincipalImage = divPrincipalImage.nextElementSibling; //
+        if (suivantDivPrincipalImage) 
+        {
+            divPrincipalImage.parentNode.insertBefore(suivantDivPrincipalImage, divPrincipalImage);
+            annuler.style.display = "block";
+            // update_order();
+        }
+    });
+}
+
+
+var deleteBtns = document.getElementsByClassName("delete"); //récupère les boutons suprimer
+
+for (var i = 0; i < deleteBtns.length; i++) //à chaque boutton
+{  
+  deleteBtns[i].addEventListener("click", function() { // ajoute un événement clique
+        var divPrincipalImage = this.parentNode.parentNode.parentNode; // récupère toute la div de l'image avec les boutton en remontant deux fois au parent pour aller a la div-contenair
+            annuler.style.display = "block"; 
+            divPrincipalImage.remove();
+    });
+}
+
+
+
+function save_order() {
+  var image_list_order = []; // créer un tableau vide
+  var rows = document.getElementsByClassName("contenairImage"); // récupère dans la variable rows la balise qui possède la class contenairImage
+  for (var i = 0; i < rows.length; i++) { // fait une boucle sur la liste d'image deja ordonnées
+      var id = rows[i].getAttribute("id"); // récupère chaque id des images
+      image_list_order.push(id); // ajoute dans l'ordre du navigateur chaque id un par un à chaque tour dans la boucle
+  }
+
+  var csrf_token = document.getElementsByName("csrfmiddlewaretoken")[0].value; // récupère 
+  let  chapitreId = changecomments.dataset.chapitreid // data-
+
+  $.ajax({
+    url: mydomorigin + '/chapitre/chap/updateImagesOrder/',
+    type: 'POST',
+    dataType: "json", // type clé valeurs exemple nom:Boudjidj ; prénom:Bilal de format à envoyer
+    data: {
+      order: image_list_order,
+      csrfmiddlewaretoken: csrf_token,
+      chapitreId: chapitreId,
+
+    },
+    success: function(response) {
+      console.log(response);
+    },
+    error: function(xhr, errmsg, err) {
+      console.log(xhr.status + ": " + xhr.responseText);
+    }
+  });
+}
+
+
+
+

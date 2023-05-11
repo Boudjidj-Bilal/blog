@@ -26,6 +26,7 @@ urlpatterns = [
     path('old/', include('myapp1.urls')),
     path('accounts/', include('allauth.urls')),
     path('profil/', include('useraccount.urls')),
+    path('traitementImage/', include('traitementImage.urls')),
 ] 
 
 

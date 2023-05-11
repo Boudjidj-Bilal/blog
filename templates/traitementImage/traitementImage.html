@@ -1,0 +1,47 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static '...' %}">
+{% endblock %}
+
+{% block content %}
+   <div class="contenair">
+        <center>
+            {% comment %} <form action= "{% url 'traitementImage:renduImage' %}" method="POST">{% csrf_token %}
+                <div class="form-example">
+                    <h1><label for="image">Entrer l'image: </label><h1>
+                    <input type="file" name="image" accept="image/*" id="image" required>
+                </div>
+                <br>
+                <br>
+                <div class="form-example">
+                    <h1><label for="intensite">Entrer l'intensité: </label></h1>
+                    <input type="number" name="intensite" id="intensite" required>
+                </div>
+                <br>
+                <br>
+                <div class="form-example">
+                    <input type="submit" value="Valider">
+                </div>
+
+            </form> {% endcomment %}
+            <form action="" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="row justify-content-center">
+                  <div class="col-6">
+                    {{ form }}
+                    <hr class="mb-3">
+                    <button class="btn btn-primary btn-lg btn-block" type="submit">Submit</button>
+                  </div>
+                </div>
+            </form>
+            <a href="{% url 'traitementImage:renduImage' %}">rendu<a>
+        </center>
+   </div>
+{% endblock %}
+
+{% block js %}
+   <script src="{% static '...' %}"></script>
+{% endblock %}

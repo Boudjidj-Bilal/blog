@@ -11,17 +11,50 @@
       <div class="contenair">
             <div class="row">
                   </h1> {{ mangadetailhtml.name }}</h1>
-                  <h1 id="changecomment" data-derniercode='{{codehtml}}' data-chapitreid='{{chapitrehtml.id}}'>{{chapitrehtml.name}} nombre de vues: {{ vueshtml|length }}</h1> 
+                  <center><h1 id="changecomment" data-derniercode='{{codehtml}}' data-chapitreid='{{chapitrehtml.id}}'>{{chapitrehtml.name}} nombre de vues: {{ vueshtml|length }}</h1></center> 
+                  <br>
                   <div class="description">
                      {{chapitrehtml.description}}
                   </div>
-                  <div class="images">
-                     {% for image in imageshtml %}
-                        <div class="image">
-                           <img src="{{ image.imagename.url }}" >
-                         </div>
-                     {% endfor %}
+                  <div class="modifier">
+                     <br>
+                     {% if request.user.username == chapitrehtml.manga.user.username %}
+                        <button class="buttonCustom primaryAction" type="submit" onclick="AfficherUpdate()">Afficher</button>
+                        <button class="buttonCustom dangerAction" type="submit" onclick="CacherUpdate()">Cacher</button>
+                        <button class="buttonCustom primaryAction btnAnnuler" id="annuler" type="submit" onClick="window.location.reload();">Annuler</button>
+                        <br>
+                        <br>
+                     {% endif %}
+                     <br>
                   </div>
+                  <form action="" method="post">
+                     {% csrf_token %}
+                     <div class="updateDelete">
+                        <button onclick="save_order()">Enregistrer l'ordre</button>
+                        <span id="message"></span>
+                     </div>
+                     <div class="images">
+                        {% for image in imageshtml %}
+                           <div class="contenairImage" id="{{ image.id }}">
+                              {% if request.user.username == chapitrehtml.manga.user.username %}
+                                 <div class="updateDelete">
+                                    <p>{{ image.order }}</p>
+                                    <a><img class="enHaut" src="/media/images/Fleche-haut-bleue-icon.png"></a>
+                                    <a><img class="enBas" src="/media/images/Fleche-bas-bleue-icon.png"></a>
+                                    <a><img class="delete" src="/media/images/Button-Close-icon.png"></a>
+                                    <p>{{ image.id }}</p>
+                                 </div>
+                              {% endif %}
+                              <div class="image">
+                                 <img src="{{ image.imagename.url }}" >
+                              </div>
+                              <br>
+                              <br>
+                           </div>
+                        {% endfor %}
+                     </div>
+                 
+                  <form>
             </div>
             
             <a href="{% url 'chapitre:addcomments'  chapitrehtml.id %}" class="btn btn-primary btn-lg" tabindex="-1" role="button" aria-disabled="true">add comments</a> {{ commentshtml|length }} 
@@ -30,7 +63,7 @@
 
             <button {% if not request.user.username %} disabled {% endif %} id="like" class="btn btn-primary btn-lg" role="button" aria-disabled="true">add like JS</button> <span id='nombreDeLike' data-chapitreid='{{chapitrehtml.id}}'>{{ likehtml|length }} </span> 
                
-               {% if request.user.username == chapitrehtml.manga.user.username %}
+               {% if request.user.username == chapitrehtml.manga.user.username %}  {% comment %} si l'utilisateur connecté et le même que celui qui a créer le chapitre {% endcomment %}
                   <a href="{% url 'chapitre:addimage' chapitrehtml.id %}" class="btn btn-primary btn-lg" tabindex="-1" role="button" aria-disabled="true">add image</a>
                {% endif %}
 

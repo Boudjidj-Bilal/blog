@@ -44,11 +44,15 @@ class Likechapitre(models.Model):
         return "%s %s" % ( self.user.username, self.chapitre)
 
 class Imageschapitre(models.Model):
-    imagename = models.ImageField(default='', blank=True, upload_to='images')
     chapitre = models.ForeignKey(Chapitre, null=True, on_delete=models.CASCADE)
+    imagename = models.ImageField(default='', blank=True, upload_to='images')
+    order = models.IntegerField(blank=True, null=False, default=1)
+
+    class Meta:
+        ordering = ['order']
 
     def __str__(self):
-        return "%s %s" % ( self.imagename, self.chapitre)
+        return "%s %s %s %s" % ( self.id, self.imagename, self.chapitre, self.order)
 
 class Vuechapitre(models.Model):
     user = models.CharField(max_length=30, default='')

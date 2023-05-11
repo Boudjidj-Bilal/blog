@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'manga',
     'chapitre',
     'useraccount',
+    'traitementImage',
 ]    
 SITE_ID = 1
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

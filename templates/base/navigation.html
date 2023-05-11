@@ -9,6 +9,7 @@
             <li><a class="elementmenu" href="{% url 'manga:pagemanga' %}">home</a></li>
             <li><a class="elementmenu" href="{% url 'account_login' %}">login</a></li>
             <li><a class="elementmenu" href="{% url 'account_logout' %}">logout</a></li>
+            <li><a class="elementmenu" href="{% url 'traitementImage:traitementImage' %}">traitementImage</a></li>
             {% if request.user.username %}
               <li>
                 <a class="elementmenu" href="{% url 'profil:pageprofil' request.user.id %}" target="_self">{{ request.user.username }}
