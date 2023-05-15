@@ -10,11 +10,20 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+import schedule
+import time
+import os
+
+
 from pathlib import Path
 import os
+
+from myblog import fonction
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+
+# TRAITEMENTIMG = str(BASE_DIR) + "/media/traitementImages/"
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -27,6 +36,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['192.168.0.115', '127.0.0.1','mangaword.herokuapp.com']
 
+fonction.delete_old_images() # lance un programme en tache de fon qui suprime les fichiers au dela d'une certaine date 
 
 # Application definition
 
@@ -147,3 +157,4 @@ STATICFILES_DIRS = [ os.path.join(BASE_DIR, 'static'),]
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+

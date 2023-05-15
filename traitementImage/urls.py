@@ -1,10 +1,10 @@
 from django.urls import path 
 from traitementImage import views
 
-app_name = "traitementImage"
+app_name = "imageprocessing"
 
 urlpatterns = [
     path('traitementImage/',views.traitementImage,name='traitementImage'), 
-    path('renduImage/',views.renduImage,name='renduImage'), 
+    path('renduImage/<str:uploaded_file_url>',views.renduImage,name='renduImage'), 
 
 ]

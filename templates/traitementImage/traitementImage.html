@@ -31,13 +31,13 @@
                 {% csrf_token %}
                 <div class="row justify-content-center">
                   <div class="col-6">
-                    {{ form }}
+                    {{ form.as_p }}
                     <hr class="mb-3">
                     <button class="btn btn-primary btn-lg btn-block" type="submit">Submit</button>
                   </div>
                 </div>
             </form>
-            <a href="{% url 'traitementImage:renduImage' %}">rendu<a>
+            
         </center>
    </div>
 {% endblock %}
@@ -45,3 +45,46 @@
 {% block js %}
    <script src="{% static '...' %}"></script>
 {% endblock %}
+
+
+{% comment %} Pour afficher la valeur du champ de type integer et la mettre à jour en temps réel avec la barre de progression dans l'interface graphique, vous pouvez ajouter un petit code JavaScript à votre template Django.
+
+Voici un exemple de code qui mettra à jour la valeur de la barre de progression à chaque fois que la valeur du champ de type integer est modifiée : {% endcomment %}
+
+{% comment %} 
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Formulaire</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div class="form-group">
+        <label for="{{ form.my_integer_field.id_for_label }}">{{ form.my_integer_field.label }}</label>
+        <input type="range" class="form-control-range" id="{{ form.my_integer_field.id_for_label }}_range" min="{{ form.my_integer_field.field.widget.attrs.min }}" max="{{ form.my_integer_field.field.widget.attrs.max }}" value="{{ form.my_integer_field.value }}" oninput="updateProgressBar(this.value)">
+        <div class="progress">
+            <div class="progress-bar" id="{{ form.my_integer_field.id_for_label }}_progress" role="progressbar" aria-valuenow="{{ form.my_integer_field.value }}" aria-valuemin="{{ form.my_integer_field.field.widget.attrs.min }}" aria-valuemax="{{ form.my_integer_field.field.widget.attrs.max }}" style="width: {{ form.my_integer_field.value }}%">{{ form.my_integer_field.value }}</div>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Enregistrer</button>
+</form>
+
+<script>
+function updateProgressBar(value) {
+    var progressBar = document.getElementById('{{ form.my_integer_field.id_for_label }}_progress');
+    progressBar.style.width = value + '%';
+    progressBar.setAttribute('aria-valuenow', value);
+    progressBar.textContent = value;
+}
+</script>
+{% endblock %} {% endcomment %}
+{% comment %} 
+Dans ce code, nous avons :
+
+Ajouté une étiquette pour le champ de type integer, suivi d'un élément input de type range pour la barre de progression Bootstrap.
+Ajouté un élément div pour la barre de progression elle-même, avec une classe progress-bar pour appliquer le style Bootstrap.
+Défini la largeur de la barre de progression à la valeur initiale du champ de type integer.
+Ajouté un script JavaScript qui sera appelé chaque fois que la valeur du champ de type integer est modifiée.
+Dans ce script, nous mettons à jour la largeur, la valeur et l'attribut aria-valuenow de la barre de progression à chaque fois que la valeur du champ de type integer est modifiée.
+Avec ce code, vous devriez avoir une barre de progression Bootstrap qui affiche la valeur du champ de type integer en temps réel dans l'interface graphique. 
+{% endcomment %}

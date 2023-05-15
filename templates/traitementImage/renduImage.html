@@ -9,9 +9,14 @@
 {% block content %}
    <div class="contenair">
       <h1> Page : renduImage </h1>
-      {% comment %} {% image = $_POST["image"] %} {% endcomment %}
-      {% comment %} {% print_r($_POST) %} {% endcomment %}
-      {% comment %} {{ print(request.POST["image"]) }} {% endcomment %}
+      
+      <img src="{{ uploaded_file_urlhtml }}">
+
+      <br>
+      <br>
+
+      <a href="{{ uploaded_file_urlhtml }}" download="proposed_file_name">télécharger l'image</a>
+
    </div>
 {% endblock %}
 

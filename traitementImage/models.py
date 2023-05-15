@@ -12,8 +12,8 @@ from django.db import models
 
 # Create your models here.
 class TraitementImage(models.Model):
-    image = models.ImageField(default='', blank=True, upload_to='images')
-    intensite = models.IntegerField()
+    image = models.ImageField(default='', blank=True, upload_to='images', null=False)
+    intensite = models.IntegerField(default=127, null=False)
 
     # user = models.ForeignKey(User, null=True, on_delete=models.CASCADE) #un chapitre appartient à un seul manga
 
